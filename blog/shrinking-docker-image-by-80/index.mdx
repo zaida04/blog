@@ -1,0 +1,209 @@
+---
+title: "Shrinking my Next.JS docker image size by 80%."
+publishedAt: 1696047234382
+description: "Saving over 1GB of disk size in every deployment"
+tags: ["docker", "ci/cd"]
+---
+
+Hello everyone, it's been some time since my last blog post. Lately, I've been busy with University projects. One of these involved creating a dockerfile for a Next.JS app. What surprised me was how large the default image size was.
+
+## Background
+
+At our University, in the beginner coding classes, we use "stack traces" to see how well students understand their code. In the past, these were checked on paper. This method was slow, taking at least a week to grade. It was hard for the teaching assistants, and students had to wait a long time for feedback.
+
+After finishing these classes, I chatted with one of the professors. I had seen the paper grading issues myself, so I suggested maybe we could move this whole process online. I didn't think he'd say yes right away, but he did! I got the pleasure of working on a single-person team of just myself, pioneering this new project.
+
+So, I spent a lot of my summer working on this project. I had to be smart about what to focus on because of the tight deadline. Some things, like certain tools like eslint or jest, I decided to save for later.
+
+When the new semester started, we tried out the new application. The first week went great. With things going smoothly, I had some time to improve what I had built. That's when I noticed the large size of our Next.JS app's docker image - it was `1.4GB`! That was taking up a lot of server space. So, my next task was to make this image smaller.
+
+Here are the ways I did it:
+
+For reference, here's my original dockerfile that was at `1.4GB`:
+
+```
+FROM node:18-alpine
+WORKDIR /app
+
+RUN apk update \
+    && apk add --no-cache --virtual .build-deps build-base \
+    curl \
+    bash \
+    && corepack enable && corepack prepare pnpm@8.6.3 --activate
+
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY ./db/package.json ./db/package.json
+COPY ./frontend/package.json ./frontend/next.config.js ./frontend/
+RUN pnpm install --silent --no-optional --frozen-lockfile
+
+COPY ./shared ./shared
+COPY ./db ./db
+RUN pnpm build:deps
+
+WORKDIR /app/frontend
+COPY ./frontend ./
+RUN pnpm build
+
+CMD ["pnpm", "start"]
+```
+
+## 1. Using multi-stage builds - (decrease of 1.4GB -> 800mb)
+
+With multi-stage builds in Docker, we can create a smaller final image for our app. Here's how it works: First, we use a bigger image to build the app. Then, we simply copy the finished app into a smaller image. This way, the final image we upload is much smaller, saving space and improving upload times.
+
+```
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+RUN apk update \
+ && apk add --no-cache --virtual .build-deps build-base \
+ curl \
+ bash \
+ && corepack enable && corepack prepare pnpm@8.6.3 --activate
+
+# Copy required files for installation
+
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY ./db/package.json ./db/package.json
+COPY ./frontend/package.json ./frontend/next.config.js ./frontend/
+RUN pnpm install --silent --no-optional --frozen-lockfile
+
+# Copy source code and build
+
+COPY ./shared ./shared
+COPY ./db ./db
+RUN pnpm build:deps
+
+WORKDIR /app/frontend
+COPY ./frontend ./
+RUN pnpm build
+
+# Stage 2: Setup run-time environment
+
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/frontend/.next/standalone/. ./frontend/
+
+WORKDIR /app/frontend
+CMD ["node", "server.js"]
+```
+
+## 2. Leverage PNPM module pruning (decrease of 800mb -> 700mb)
+
+With PNPM, after building our Next.JS app, we can delete our node_modules folder and then only reinstall the essential production dependencies. This helps in keeping our app lightweight and efficient.
+
+```
+
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+RUN apk update \
+ && apk add --no-cache --virtual .build-deps build-base \
+ curl \
+ bash \
+ && corepack enable && corepack prepare pnpm@8.6.3 --activate
+
+# Copy required files for installation
+
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY ./db/package.json ./db/package.json
+COPY ./frontend/package.json ./frontend/next.config.js ./frontend/
+RUN pnpm install --silent --no-optional --frozen-lockfile
+
+# Copy source code and build
+
+COPY ./shared ./shared
+COPY ./db ./db
+RUN pnpm build:deps
+
+WORKDIR /app/frontend
+COPY ./frontend ./
+RUN pnpm build
+
+WORKDIR /app
+RUN rm -rf node_modules && pnpm install --silent --no-optional --frozen-lockfile --prod
+
+# Stage 2: Setup run-time environment
+
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/frontend/.next/standalone/. ./frontend/
+
+WORKDIR /app/frontend
+CMD ["node", "server.js"]
+
+```
+
+## 3. Using Next.JS "standalone" module (decrease of 700mb -> 300mb)
+
+Next.JS offers a [standalone](https://nextjs.org/docs/pages/api-reference/next-config-js/output) mode. If you're using features like middleware, getStaticProps, or getServerSideProps which need a server, this mode is great. It packages your app into a single folder. Plus, you can remove the large node_modules folder and only keep the dependencies that the Next.JS server needs.
+
+next.config.js
+
+```js
+const nextConfig = {
+    reactStrictMode: true,
+    output: "standalone",
+    experimental: {
+        outputFileTracingRoot: __dirname,
+    },
+};
+
+module.exports = nextConfig;
+```
+
+Dockerfile
+
+```
+# Stage 1: Install dependencies and build
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+RUN apk update \
+    && apk add --no-cache --virtual .build-deps build-base \
+    curl \
+    bash \
+    && corepack enable && corepack prepare pnpm@8.6.3 --activate
+
+# Copy required files for installation
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY ./db/package.json ./db/package.json
+COPY ./frontend/package.json ./frontend/next.config.js ./frontend/
+RUN pnpm install --silent --no-optional --frozen-lockfile
+
+# Copy source code and build
+COPY ./shared ./shared
+COPY ./db ./db
+RUN pnpm build:deps
+
+WORKDIR /app/frontend
+COPY ./frontend ./
+RUN pnpm build
+
+WORKDIR /app
+# reinstall only prod modules
+RUN rm -rf node_modules && pnpm install --silent --no-optional --frozen-lockfile --prod
+
+
+# Stage 2: Setup run-time environment
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/frontend/.next/static ./frontend/.next/static
+COPY --from=builder /app/frontend/.next/standalone/. ./frontend/
+
+WORKDIR /app/frontend
+CMD ["node", "server.js"]
+```
+
+## Closing
+
+Overall, it was a fun experience watching the image size shrink. I learned a lot about how docker works and how to optimize it. I hope this post helps you in your own docker adventures!

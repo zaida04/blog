@@ -1,0 +1,159 @@
+---
+title: "Documenting my library with ChatGPT."
+publishedAt: 1678521036323
+description: "AI is one step closer to total world domination. Sort-of."
+tags: ["coding", "ai"]
+---
+
+Phew, I have not written a blog post in quite a while. But, I bring you all some useful tidings about how I’ve been leveraging AI to do the work I don’t want to do. For today’s story, I’m going to talk about how I used ChatGPT to generate TSDoc comments for my library.
+
+# Some Context
+
+For over two or so years, I’ve been the maintainer of the library [Guilded.js](https://github.com/guildedjs/guilded.js). I created this library during the pandemic as Guilded, a competitor to Discord, was becoming a new chat platform and I saw the need for tools to assist developers with creating bots. It’s inspired by Discord.js, borrowing their concepts of cache management and structure organization.
+
+We use TypeDoc with TSDoc comments for documenting things like classes, methods, functions, and more. One problem with this, is that a majority of the library has been rewritten and iterated upon various times. I count about 3 major rewrites, and with each one, the comments for the classes and methods have been left either unwritten or partially incorrect. Having over 100 methods, it did not seem very appealing to write all the TSDoc comments by hand, and by myself.
+
+At first, I made a public community announcement stating that I was looking for help with writing the documentation for the library. I thought it would be a great way for people to dip their toes into OSS, but unfortunately there just wasn’t enough demand. It looked as though I’d have to dive into this myself. Knowing how painful it was going to be, I procrastinated for months, saying that the code was self-documenting enough for people to make do. While the code _is_ self-documenting to an extent, people are not going to want to dive into the source code whenever they have a question about a method. I also recognize that other people don’t think in the same way I do, meaning that just by looking at my code, they aren’t going to automatically assume the same intentions and ideas that I had.
+
+Over the course of my previous college semester, I started hearing about a tool called ChatGPT. It was the hottest topic in the tech industry and was hailed as a revolutionary tool capable of speeding up workflows an insane amount. I initially brushed it off, thinking [AI was still far away from taking our jobs](https://nwn.blogs.com/nwn/2023/02/chatgpt-cannot-really-code.html). However, thanks to Tech Twitter, I soon realized it had great potential in arduous areas like documentation writing. And so, I began trying to leverage it for my library.
+
+# The process
+
+## First Try
+
+On my first run through, I gave ChatGPT a file like this, and asked it to write some comments about it.
+
+**Input:** Write some comments about this code
+
+<CodeBlock code={`import { Base } from "./Base";
+
+export class Group extends Base {
+    addMember(memberId: string): Promise<void> {
+        return this.client.groups.addMember(this.id, memberId);
+    }
+
+    removeMember(memberId: string): Promise<void> {
+        return this.client.groups.removeMember(this.id, memberId);
+    }
+
+}`}
+/>
+
+**Output:**
+
+<RegularBlock text={`This code exports a Group class that extends the Base class.
+
+The Group class has two methods:
+
+-   addMember: This method takes a memberId parameter and returns a Promise that adds the member with the given memberId
+    to the group associated with the current instance of the Group class.
+    It achieves this by calling the addMember method on the client object's groups property, passing in the group's id and the memberId parameters.
+
+-   removeMember: This method takes a memberId parameter and returns a Promise that removes the member with the given memberId
+    from the group associated with the current instance of the Group class.
+    It achieves this by calling the removeMember method on the client object's groups property, passing in the group's id and the memberId parameters.
+
+Overall, this code appears to be a module for managing group memberships in a larger application. It uses promises to handle asynchronous operations, making it well-suited for
+use in an asynchronous environment.
+`} />
+
+My initial worry with this was how it would do with such a low-context environment. It has no idea what `this.client` is, or what the methods on that object even are. However, due to being trained on information about libraries like Discord.js, it actually did very well with interpreting this code. It was able to give full context about the methods, their purpose, and the purpose of their return values.
+
+However, I needed it to write these code comments inline, and also format them as a JSDoc comment.
+
+> 💡 I won’t be copy pasting the same code snippet I gave it in every try, as that would be redundant and take up screen space.
+
+## Second Try
+
+**Input:** Write some jsdoc comments about this code.
+
+**Output:**
+
+<CodeBlock code={`import { Base } from "./Base";
+
+/\*\*
+
+-   Represents a group.
+-   @extends Base
+    \*/
+    export class Group extends Base {
+    /\*\*
+    -   Adds a member to the group.
+    -   @param {string} memberId - The id of the member to add.
+    -   @returns {Promise<void>} A Promise that resolves when the member is added successfully.
+        \*/
+        addMember(memberId) {
+        return this.client.groups.addMember(this.id, memberId);
+        }
+
+/\*\*
+
+-   Removes a member from the group.
+-   @param {string} memberId - The id of the member to remove.
+-   @returns {Promise<void>} A Promise that resolves when the member is removed successfully.
+    \*/
+    removeMember(memberId) {
+    return this.client.groups.removeMember(this.id, memberId);
+    }
+    }
+    `} />
+
+Now this was getting somewhere. The glaring issue however was that it stripped the methods of their parameter types and their return types and inlined them in the JSDoc comment. Since the code is written in TypeScript, it’s meant to be our single source of truth when it comes to types. I realized regular JSDoc comments weren’t going to cut it here. There was also an occassional issue where ChatGPT was not putting the returned code in a codeblock, making the site’s markdown renderer have some wacky side effects as a result. Turns out JSDoc comment headers are also valid markdown for lists.
+
+## Third Try
+
+**Input:** Can you write some tsdoc comments about this code and put it in a codeblock. Please do not add types in the @param tags for the comments. Make sure you keep the types in the method parameters and the return type.
+
+**Output:**
+
+<CodeBlock code={`import { Base } from "./Base";
+
+/\*\*
+
+-   Represents a group that extends the Base class.
+    _/
+    export class Group extends Base {
+    /\*\*
+    _ Adds a member to the group.
+    _ @param memberId - The ID of the member to add to the group.
+    _ @returns A Promise that resolves when the member is added to
+    the group successfully.
+    \*/
+    addMember(memberId: string): Promise<void> {
+    return this.client.groups.addMember(this.id, memberId);
+    }
+
+        /**
+         * Removes a member from the group.
+         * @param memberId - The ID of the member to remove from the group.
+         * @returns A Promise that resolves when the member is removed from
+         the group successfully.
+         */
+        removeMember(memberId: string): Promise<void> {
+            return this.client.groups.removeMember(this.id, memberId);
+        }
+
+    }
+    `} />
+
+That was perfect. Clear, concise comments that reflected exactly what the class and methods were trying to do. I was thoroughly impressed. I was also extremely happy that I wasn’t going to have to write all these comments myself, effectively saving me upwards of 20+ hours worth of work.
+
+## Defeating some quirks
+
+One common case I noticed that ChatGPT would struggle with was when I had existing comments for some of the methods. To combat this, I added a simple request to bring about the final rendition of my query:
+`Can you generate tsdoc comments without types in the @param for the following code and put it in a codeblock. Make sure you keep the types in the method parameters and the return type. If there are any comments existing already, replace them with yours.`
+
+# Takeaways
+
+As a result of this journey, I learned three things:
+
+1. ## Don’t brush off new technology, give it a chance.
+    - Because of my reluctance to use ChatGPT, I almost invested 20+ hours of work for something that would have been subpar compared to what the AI could have given me.
+2. ## Be clear and exact with your requests to the AI.
+    - The AI isn’t perfect and does not know what you want on the first try in some cases. It’s easy to get discouraged and think that the response it gave you was subpar, but if you just narrow down exactly what you want, chances are it’ll give you just that.
+    - You should also take a second to recognize any potential flaws in your requests. Don’t ask the AI for JSDoc comments when what you actually want are TSDoc comments.
+    - Don’t let the AI get away with incorrectly fulfilling your requests. Educate it on why its previous response wasn’t satisfactory and what it can to do fix it. It will keep that in mind for your next conversation too.
+3. ## Explore new possibilities.
+    - Think outside the box of what you’re trying to do and you might be surprised. In some follow-up responses, I asked ChatGPT to generate example snippets of the methods I had it document, and it was actually able to generate working code that followed the rules of my library.
+
+Overall, I had a pretty positive experience and I encourage all library maintainers to give it a try. Free up the work on your plate so you can work on the things that excite you, like the code.

