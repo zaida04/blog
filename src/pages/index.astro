@@ -51,11 +51,29 @@ import { Github, Mail } from "lucide-react";
     <div id="projects" class="flex flex-col gap-4">
         <h2>Featured Projects</h2>
 
-        <div>
-            <h3 class="pb-4">Websites</h3>
+        <div class="flex flex-col gap-4">
+            <h3>Websites & Fullstack</h3>
             <div class="flex flex-row flex-wrap gap-4">
                 {
                     projects_data.sites.map((project) => (
+                        <ProjectCard {...project} />
+                    ))
+                }
+            </div>
+
+            <h3>Backend & Bots</h3>
+            <div class="flex flex-row flex-wrap gap-4">
+                {
+                    projects_data.backends.map((project) => (
+                        <ProjectCard {...project} />
+                    ))
+                }
+            </div>
+
+            <h3>Libraries</h3>
+            <div class="flex flex-row flex-wrap gap-4">
+                {
+                    projects_data.libraries.map((project) => (
                         <ProjectCard {...project} />
                     ))
                 }

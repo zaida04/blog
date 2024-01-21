@@ -8,11 +8,11 @@ export default function ProjectCard(props: typeof project_data.sites[number]) {
                 <p className="text-2xl font-bold text-white">
                     {props.title}
                 </p>
-                <div className="flex flex-row gap-2 text-amber-500">
+                {props.statistics && <div className="flex flex-row gap-2 text-amber-500">
                     {Object.entries(props.statistics).map(([stat, value], index) =>
                         <Statistic prefixDot={index !== 0} value={value} statistic={stat} />
                     )}
-                </div>
+                </div>}
             </div>
 
             <p className="text-sm text-balance font-normal max-w-[22rem] text-white">{props.description}</p>
