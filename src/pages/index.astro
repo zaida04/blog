@@ -6,6 +6,12 @@ import projects_data from "../data/projects.json";
 import PageLayout from "../layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
 import { Github, Mail } from "lucide-react";
+
+const project_sections: Record<string, keyof typeof projects_data> = {
+    "Websites & Fullstack": "sites",
+    "Backend & Bots": "backends",
+    Libraries: "libraries",
+};
 ---
 
 <PageLayout title="Zaid's Site">
@@ -52,32 +58,20 @@ import { Github, Mail } from "lucide-react";
         <h2>Featured Projects</h2>
 
         <div class="flex flex-col gap-4">
-            <h3>Websites & Fullstack</h3>
-            <div class="flex flex-row flex-wrap gap-4">
-                {
-                    projects_data.sites.map((project) => (
-                        <ProjectCard {...project} />
-                    ))
-                }
-            </div>
-
-            <h3>Backend & Bots</h3>
-            <div class="flex flex-row flex-wrap gap-4">
-                {
-                    projects_data.backends.map((project) => (
-                        <ProjectCard {...project} />
-                    ))
-                }
-            </div>
-
-            <h3>Libraries</h3>
-            <div class="flex flex-row flex-wrap gap-4">
-                {
-                    projects_data.libraries.map((project) => (
-                        <ProjectCard {...project} />
-                    ))
-                }
-            </div>
+            {
+                Object.entries(project_sections).map(
+                    ([title, json_section]) => (
+                        <>
+                            <h3>{title}</h3>
+                            <div class="flex flex-row gap-4 overflow-x-auto pb-4">
+                                {projects_data[json_section].map((project) => (
+                                    <ProjectCard {...project} />
+                                ))}
+                            </div>
+                        </>
+                    ),
+                )
+            }
         </div>
 
         <div id="competitions">

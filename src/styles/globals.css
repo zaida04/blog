@@ -30,4 +30,21 @@
     html {
         @apply overflow-y-scroll
     }
+
+    * {
+        scrollbar-width: auto;
+        scrollbar-color: #8f54a0 #ffffff;
+    }
+
+    *::-webkit-scrollbar {
+        @apply w-[12px];
+    }
+
+    *::-webkit-scrollbar-track {
+        @apply bg-white
+    }
+
+    *::-webkit-scrollbar-thumb {
+        @apply bg-slate-800 border border-white;
+    }
 }
