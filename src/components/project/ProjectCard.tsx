@@ -1,7 +1,18 @@
 import { Github, Link } from "lucide-react";
-import type project_data from "../../data/projects.json";
 
-export default function ProjectCard(props: typeof project_data.sites[number]) {
+export default function ProjectCard(props: {
+    title: string,
+    statistics?: {
+        downloads?: string;
+        stars?: string;
+    },
+    description: string,
+    tags: string[],
+    links: {
+        github?: string,
+        website?: string
+    },
+}) {
     return (
         <div className="flex flex-col h-fit gap-3 px-6 py-4 border-2 rounded-2xl border-slate-800/50">
             <div>
