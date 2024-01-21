@@ -1,0 +1,22 @@
+---
+import Layout from "./Layout.astro";
+import Navbar from "../components/nav/Navbar.tsx";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+    <div class="flex justify-center scroll-smooth">
+        <div class="w-4/6">
+            <Navbar />
+
+            <div class="flex flex-col gap-16">
+                <slot />
+            </div>
+        </div>
+    </div>
+</Layout>

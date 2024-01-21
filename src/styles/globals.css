@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: "Wotfard", sans-serif;
+@layer base {
+    h1 {
+        @apply text-white text-6xl font-[800]
+    }
+
+    h2 {
+        @apply text-white text-4xl font-bold
+    }
+
+    h3 {
+        @apply text-white text-2xl font-bold
+    }
+
+    p {
+        @apply text-lg leading-loose font-medium
+    }
+
+    a { 
+        @apply underline underline-offset-2 hover:text-white transition-colors
+    }
+
+    body {
+        @apply font-wotfard text-gray-400 bg-dark-base min-h-screen;
+    }
+
+    html {
+        @apply overflow-y-scroll
+    }
 }

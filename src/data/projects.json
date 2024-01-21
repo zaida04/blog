@@ -1,0 +1,71 @@
+{
+    "sites": [
+        {
+            "title": "Yoki (site)",
+            "statistics": {
+                "servers": "1,800+",
+                "members": "100,000+"
+            },
+            "description": "Yoki is Guilded's first and biggest moderation bot on the platform. Helping protect your community from bad actors, automagically.",
+            "tags": [
+                "TypeScript",
+                "Next.JS",
+                "React"
+            ],
+            "links": {
+                "github": "https://github.com/yoki-labs",
+                "website": "https://yoki.gg"
+            }
+        },
+        {
+            "title": "Loggregator",
+            "statistics": {
+                "released": "newly"
+            },
+            "description": "Store, view, & search your logs. That's it. Nothing complicated, only what you need.",
+            "tags": [
+                "TypeScript",
+                "SvelteKit",
+                "Svelte"
+            ],
+            "links": {
+                "github": "https://github.com/zaida04/loggregator",
+                "website": "https://loggregator.co"
+            }
+        },
+        {
+            "title": "Evalx.sh",
+            "statistics": {
+                "progress": ""
+            },
+            "description": "Code. Post. Done. You give us your code, we take care of running it. You focus on what matters, building great applications.",
+            "tags": [
+                "TypeScript",
+                "Next.JS",
+                "Node.JS",
+                "Docker",
+                "React"
+            ],
+            "links": {
+                "github": "https://github.com/zaida04/evalx.sh",
+                "website": "https://evalx.sh"
+            }
+        },
+        {
+            "title": "Guilded.JS Docs",
+            "statistics": {
+                "downloads": "13,000+"
+            },
+            "description": "Tools for creating bots with the guilded.gg bot API. Usable in either JavaScript or TypeScript projects.",
+            "tags": [
+                "TypeScript",
+                "Next.JS",
+                "React"
+            ],
+            "links": {
+                "github": "https://github.com/zaida04/guilded.js",
+                "website": "https://guilded.js.org"
+            }
+        }
+    ]
+}
