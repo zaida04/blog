@@ -6,7 +6,7 @@
                 "servers": "1,800+",
                 "members": "100,000+"
             },
-            "description": "Yoki is Guilded's first and biggest moderation bot on the platform. Helping protect your community from bad actors, automagically.",
+            "description": "Site for Yoki, a multipurpose bot for guilded.gg. Allows you to configure the bot, view the commands, invite it to your server, and more.",
             "tags": [
                 "TypeScript",
                 "Next.JS",
@@ -50,7 +50,7 @@
             "statistics": {
                 "downloads": "13,000+"
             },
-            "description": "Tools for creating bots with the guilded.gg bot API. Usable in either JavaScript or TypeScript projects.",
+            "description": "Docs site for Guilded.JS. Allows you to learn how to use the library and get started with it.",
             "tags": [
                 "TypeScript",
                 "Next.JS",
@@ -63,6 +63,19 @@
         }
     ],
     "backends": [
+        {
+            "title": "Yoki (bot)",
+            "description": "Yoki is Guilded's first and biggest moderation bot on the platform. Helping protect your community from bad actors, automagically.",
+            "tags": [
+                "TypeScript",
+                "Node.JS",
+                "WebSocket",
+                "HTTP"
+            ],
+            "links": {
+                "website": "https://yoki.gg"
+            }
+        },
         {
             "title": "Guilded Shields",
             "description": "A service for generating SVG shields for your guilded.gg server.",
