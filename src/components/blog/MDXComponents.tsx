@@ -43,13 +43,13 @@ const MDXComponents = {
         return <blockquote className="indent-0 rounded-lg bg-slate-800 px-4 pt-4 mb-4">{props.children}</blockquote>;
     },
     li: (props: { children: React.ReactNode }) => {
-        return <li className="list-desc py-2">{props.children}</li>;
+        return <li className="list-desc text-lg">{props.children}</li>;
     },
     ol: (props: { children: React.ReactNode }) => {
-        return <ol className="md:indent-8 ml-4 px-2 md:px-4 list-decimal">{props.children}</ol>;
+        return <ol className="md:indent-8 ml-2 px-2 md:px-4 list-decimal">{props.children}</ol>;
     },
     ul: (props: { children: React.ReactNode }) => {
-        return <ul className="list-desc">{props.children}</ul>;
+        return <ul className="list-desc pb-8">{props.children}</ul>;
     },
     // biome-ignore lint/a11y/useAltText: <explanation>
     img: (props: { src: string }) => <img {...props} className="pt-8" />,
