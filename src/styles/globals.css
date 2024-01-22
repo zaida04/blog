@@ -28,7 +28,7 @@
     }
 
     html {
-        @apply overflow-y-scroll
+        @apply overflow-y-scroll scroll-smooth;
     }
 
     * {
