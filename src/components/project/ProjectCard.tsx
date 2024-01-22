@@ -38,12 +38,12 @@ export default function ProjectCard(props: ProjectProps) {
 
             <div className="flex flex-row gap-2">
                 {props.links.github && (
-                    <a href={props.links.github}>
+                    <a href={props.links.github} aria-label="GitHub">
                         <Github />
                     </a>
                 )}
                 {props.links.website && (
-                    <a href={props.links.website}>
+                    <a href={props.links.website} aria-label="Website Link">
                         <Link />
                     </a>
                 )}
