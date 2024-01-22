@@ -20,7 +20,7 @@ export default function BlogCard(props: {
                 </div>
                 <p className="text-base text-gray-400">{props.data.description}</p>
                 <div className="pt-2 flex flex-row gap-1">
-                    {props.data.tags?.map((tag, i) => <Tag className="text-sm">{tag}</Tag>)}
+                    {props.data.tags?.map((tag) => <Tag className="text-sm">{tag}</Tag>)}
                 </div>
             </div>
         </a>
