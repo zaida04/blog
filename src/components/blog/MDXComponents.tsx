@@ -1,4 +1,3 @@
-import CodeBlock from "./CodeBlock";
 import RegularBlock from "./RegularBlock";
 import XMailTable from "./Tables/XMailTable";
 import Statistic from "./Statistic";
@@ -54,7 +53,6 @@ const MDXComponents = {
     // biome-ignore lint/a11y/useAltText: <explanation>
     img: (props: { src: string }) => <img {...props} className="pt-8" />,
     XMailTable,
-    CodeBlock,
     RegularBlock,
 };
 
