@@ -6,14 +6,18 @@ import { competitions_data } from "../static/data/competitions";
 
 import PageLayout from "../components/layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
+import BlogCard from "../components/blog/BlogCard";
 import { Github, Mail } from "lucide-react";
 import CompetitionCard from "../components/competition/CompetitionCard";
+import { getCollection } from "astro:content";
 
 const project_sections: Record<string, keyof typeof projects_data> = {
     "Websites & Fullstack": "sites",
     "Backend & Bots": "backends",
     Libraries: "libraries",
 };
+
+const allPosts = await getCollection("posts");
 ---
 
 <PageLayout title="Zaid's Site">
@@ -21,21 +25,21 @@ const project_sections: Record<string, keyof typeof projects_data> = {
         <div class="flex flex-col gap-8 pr-8">
             <h1>Hello, I'm Zaid.</h1>
             <div class="flex flex-col gap-4">
-                <p>
+                <p class="leading-loose">
                     I build full-stack stuff™ using Node.js, JavaScript,
                     TypeScript, and Python. I'm familiar with databases like
                     PostgreSQL and MongoDB.
                 </p>
-                <p>
+                <p class="leading-loose">
                     I'm currently really interested in learning lower-level
                     languages such as Rust and Elixir.
                 </p>
-                <p>
+                <p class="leading-loose">
                     I'm the founder of Yoki. On the side, I am a Community
                     Manager for Adobe Creative Career. Previously a Software
                     Engineer at Mirage Security & Fiveable.
                 </p>
-                <p>I've spent X coding this year.</p>
+                <p class="leading-loose">I've spent X coding this year.</p>
 
                 <div class="flex flex-row gap-2">
                     <Github />
@@ -89,6 +93,12 @@ const project_sections: Record<string, keyof typeof projects_data> = {
 
     <div id="blog">
         <h2>Blog</h2>
-        <div></div>
+        <div class="flex flex-col gap-10 mt-8">
+            {
+                allPosts
+                    .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+                    .map((post) => <BlogCard {...post} />)
+            }
+        </div>
     </div>
 </PageLayout>

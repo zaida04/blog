@@ -1,4 +1,5 @@
 import { Github, Link } from "lucide-react";
+import Tag from "../Tag.tsx";
 
 export interface ProjectProps {
     title: string;
@@ -31,9 +32,7 @@ export default function ProjectCard(props: ProjectProps) {
 
             <div>
                 <div className="flex flex-row gap-2">
-                    {props.tags.map((tag) => {
-                        return <p className=" bg-slate-800 text-xs text-white px-2 py-[0.75px] rounded-full">{tag}</p>;
-                    })}
+                    {props.tags.map((tag) => <Tag>{tag}</Tag>)}
                 </div>
             </div>
 

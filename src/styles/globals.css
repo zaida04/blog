@@ -16,7 +16,7 @@
     }
 
     p {
-        @apply text-lg leading-loose font-medium
+        @apply text-lg font-medium
     }
 
     a { 
