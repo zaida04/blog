@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import MyFace from "../imgs/my_face.png";
-import projects_data from "../data/projects.json";
+import { projects_data } from "../data/projects";
 
 import PageLayout from "../layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
@@ -84,3 +84,4 @@ const project_sections: Record<string, keyof typeof projects_data> = {
         </div>
     </div>
 </PageLayout>
+../data/projects
