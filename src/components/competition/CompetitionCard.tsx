@@ -1,5 +1,4 @@
-import { Image } from "astro:assets";
-import Reef from "../../imgs/reef.png";
+import Reef from "../../static/imgs/reef.png";
 
 export interface CompetitionProps {
     name: string;
