@@ -1,5 +1,5 @@
 ---
-title: "Shrinking my Next.JS docker image size by 80%."
+title: "Shrinking my Next.JS docker image size by 80%"
 publishedAt: 1696047234382
 description: "Saving over 1GB of disk size in every deployment"
 tags: ["docker", "ci/cd"]
@@ -47,7 +47,7 @@ RUN pnpm build
 CMD ["pnpm", "start"]
 ```
 
-## 1. Using multi-stage builds - (decrease of 1.4GB -> 800mb)
+### 1. Using multi-stage builds - (decrease of 1.4GB -> 800mb)
 
 With multi-stage builds in Docker, we can create a smaller final image for our app. Here's how it works: First, we use a bigger image to build the app. Then, we simply copy the finished app into a smaller image. This way, the final image we upload is much smaller, saving space and improving upload times.
 
@@ -91,7 +91,7 @@ WORKDIR /app/frontend
 CMD ["node", "server.js"]
 ```
 
-## 2. Leverage PNPM module pruning (decrease of 800mb -> 700mb)
+### 2. Leverage PNPM module pruning (decrease of 800mb -> 700mb)
 
 With PNPM, after building our Next.JS app, we can delete our node_modules folder and then only reinstall the essential production dependencies. This helps in keeping our app lightweight and efficient.
 
@@ -140,11 +140,11 @@ CMD ["node", "server.js"]
 
 ```
 
-## 3. Using Next.JS "standalone" module (decrease of 700mb -> 300mb)
+### 3. Using Next.JS "standalone" module (decrease of 700mb -> 300mb)
 
 Next.JS offers a [standalone](https://nextjs.org/docs/pages/api-reference/next-config-js/output) mode. If you're using features like middleware, getStaticProps, or getServerSideProps which need a server, this mode is great. It packages your app into a single folder. Plus, you can remove the large node_modules folder and only keep the dependencies that the Next.JS server needs.
 
-next.config.js
+`next.config.js`
 
 ```js
 const nextConfig = {
@@ -158,7 +158,7 @@ const nextConfig = {
 module.exports = nextConfig;
 ```
 
-Dockerfile
+`Dockerfile`
 
 ```
 # Stage 1: Install dependencies and build

@@ -12,7 +12,9 @@ const { title } = Astro.props;
 <Layout title={title}>
     <div class="flex justify-center mb-24">
         <div class="w-4/6">
-            <Navbar />
+            <div class="mb-8">
+                <Navbar />
+            </div>
 
             <div class="flex flex-col gap-20">
                 <slot />

