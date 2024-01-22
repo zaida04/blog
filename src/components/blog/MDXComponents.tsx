@@ -30,7 +30,7 @@ const MDXComponents = {
         return <p className="pb-4 font-normal leading-snug indent-4 text-left w-full">{props.children}</p>;
     },
     code: (props: { children: React.ReactNode }) => {
-        return <code className="px-2 text-red-600">{props.children}</code>;
+        return <code className="text-base text-red-600">{props.children}</code>;
     },
     pre: (props: { children: React.ReactNode }) => {
         return (

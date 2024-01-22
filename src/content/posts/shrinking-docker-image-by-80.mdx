@@ -21,7 +21,7 @@ Here are the ways I did it:
 
 For reference, here's my original dockerfile that was at `1.4GB`:
 
-```
+```dockerfile
 FROM node:18-alpine
 WORKDIR /app
 
@@ -51,7 +51,7 @@ CMD ["pnpm", "start"]
 
 With multi-stage builds in Docker, we can create a smaller final image for our app. Here's how it works: First, we use a bigger image to build the app. Then, we simply copy the finished app into a smaller image. This way, the final image we upload is much smaller, saving space and improving upload times.
 
-```
+```dockerfile
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -95,8 +95,7 @@ CMD ["node", "server.js"]
 
 With PNPM, after building our Next.JS app, we can delete our node_modules folder and then only reinstall the essential production dependencies. This helps in keeping our app lightweight and efficient.
 
-```
-
+```dockerfile
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -146,7 +145,7 @@ Next.JS offers a [standalone](https://nextjs.org/docs/pages/api-reference/next-c
 
 `next.config.js`
 
-```js
+```javascript
 const nextConfig = {
     reactStrictMode: true,
     output: "standalone",
@@ -160,7 +159,7 @@ module.exports = nextConfig;
 
 `Dockerfile`
 
-```
+```dockerfile
 # Stage 1: Install dependencies and build
 FROM node:18-alpine AS builder
 
