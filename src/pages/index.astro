@@ -2,10 +2,12 @@
 import { Image } from "astro:assets";
 import MyFace from "../imgs/my_face.png";
 import { projects_data } from "../data/projects";
+import { competitions_data } from "../data/competitions";
 
 import PageLayout from "../layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
 import { Github, Mail } from "lucide-react";
+import CompetitionCard from "../components/competition/CompetitionCard";
 
 const project_sections: Record<string, keyof typeof projects_data> = {
     "Websites & Fullstack": "sites",
@@ -54,10 +56,9 @@ const project_sections: Record<string, keyof typeof projects_data> = {
         </div>
     </div>
 
-    <div id="projects" class="flex flex-col gap-4">
-        <h2>Featured Projects</h2>
-
-        <div class="flex flex-col gap-4">
+    <div id="projects" class="flex flex-col gap-16">
+        <div class="flex flex-col gap-6">
+            <h2>Featured Projects</h2>
             {
                 Object.entries(project_sections).map(
                     ([title, json_section]) => (
@@ -73,15 +74,21 @@ const project_sections: Record<string, keyof typeof projects_data> = {
                 )
             }
         </div>
+    </div>
 
-        <div id="competitions">
-            <h2>Competitions</h2>
-        </div>
-
-        <div id="blog">
-            <h2>Blog</h2>
-            <div></div>
+    <div id="competitions">
+        <h2>Competitions</h2>
+        <div class="flex flex-row gap-4 mt-4">
+            {
+                competitions_data.map((competition) => (
+                    <CompetitionCard {...competition} />
+                ))
+            }
         </div>
     </div>
+
+    <div id="blog">
+        <h2>Blog</h2>
+        <div></div>
+    </div>
 </PageLayout>
-../data/projects
