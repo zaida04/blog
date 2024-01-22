@@ -1,4 +1,4 @@
-import type { ProjectProps } from "../components/project/ProjectCard";
+import type { ProjectProps } from "../../components/project/ProjectCard";
 
 export const projects_data = {
 	sites: [
@@ -14,6 +14,17 @@ export const projects_data = {
 			links: {
 				github: "https://github.com/yoki-labs",
 				website: "https://yoki.gg",
+			},
+		},
+		{
+			title: "nico.engineer",
+			statistics: "This site!",
+			description:
+				"My personal website. Allows you to learn more about me, my projects, and more. I apply whatever I learn about frontend to this site.",
+			tags: ["TypeScript", "Astro", "React"],
+			links: {
+				github: "https://github.com/zaida04/blog",
+				website: "https://nico.engineer",
 			},
 		},
 		{
