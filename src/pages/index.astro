@@ -10,6 +10,8 @@ import BlogCard from "../components/blog/BlogCard";
 import { Github, Mail } from "lucide-react";
 import CompetitionCard from "../components/competition/CompetitionCard";
 import { getCollection } from "astro:content";
+import Link from "../components/Link";
+import { colors } from "../utils/links";
 
 const project_sections: Record<string, keyof typeof projects_data> = {
     "Websites & Fullstack": "sites",
@@ -26,20 +28,85 @@ const allPosts = await getCollection("posts");
             <h1>Hello, I'm Zaid.</h1>
             <div class="flex flex-col font-normal gap-4">
                 <p class="leading-loose">
-                    I build full-stack stuff™ using Node.js, JavaScript,
-                    TypeScript, and Python. I'm familiar with databases like
-                    PostgreSQL and MongoDB.
+                    I build full-stack stuff™ using
+                    <Link
+                        href={colors.node.url}
+                        className={colors.node.color}
+                        text="Node.js"
+                    />,
+                    <Link
+                        href={colors.javascript.url}
+                        className={colors.javascript.color}
+                        text="JavaScript"
+                    />,
+                    <Link
+                        href={colors.typescript.url}
+                        className={colors.typescript.color}
+                        text="TypeScript"
+                    />, and
+                    <Link
+                        href={colors.python.url}
+                        className={colors.python.color}
+                        text="Python"
+                    />. I'm familiar with databases like
+                    <Link
+                        href={colors.pg.url}
+                        className={colors.pg.color}
+                        text="PostgreSQL"
+                    /> and
+                    <Link
+                        href={colors.mongo.url}
+                        className={colors.mongo.color}
+                        text="MongoDB"
+                    />.
                 </p>
+
                 <p class="leading-loose">
                     I'm currently really interested in learning lower-level
-                    languages such as Rust and Elixir.
+                    languages such as
+                    <Link
+                        href={colors.rust.url}
+                        className={colors.rust.color}
+                        text="Rust"
+                    /> and
+                    <Link
+                        href={colors.elixir.url}
+                        className={colors.elixir.color}
+                        text="Elixir"
+                    />.
                 </p>
+
                 <p class="leading-loose">
-                    I'm the founder of Yoki. On the side, I am a Community
-                    Manager for Adobe Creative Career. Previously a Software
-                    Engineer at Mirage Security & Fiveable.
+                    I'm the founder of
+                    <Link
+                        href={colors.yoki.url}
+                        className={colors.yoki.color}
+                        text="Yoki"
+                    />. On the side, I am a Community Manager for
+                    <Link
+                        href={colors.adobe.url}
+                        className={colors.adobe.color}
+                        text="Adobe Creative Career"
+                    />. Previously a Software Engineer Intern at
+                    <Link
+                        href={colors.mirage.url}
+                        className={colors.mirage.color}
+                        text="Mirage Security"
+                    /> &
+                    <Link
+                        href={colors.fiveable.url}
+                        className={colors.fiveable.color}
+                        text="Fiveable"
+                    />.
                 </p>
-                <p class="leading-loose">I've spent X coding this year.</p>
+
+                <h3>Coding Stats</h3>
+
+                <p class="leading-loose">
+                    I've spent <span class="text-pink-600 font-bold">
+                        394 hrs & 2 mins
+                    </span> coding last year.
+                </p>
 
                 <div class="flex flex-row gap-2">
                     <Github />

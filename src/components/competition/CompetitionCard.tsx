@@ -25,7 +25,7 @@ export default function CompetitionCard(props: CompetitionProps) {
         </div>
 
         <div className="flex flex-col items-center">
-            <p className="text-lg">{props.name}</p>
+            <p className="text-lg text-white">{props.name}</p>
             {props.track && <p className="text-sm text-gray-500">{props.track}</p>}
             <p className="text-xs text-gray-500">{props.date}</p>
         </div>
