@@ -7,30 +7,41 @@ const navbar = {
     competitons: "/#competitions",
     blog: "/#blog",
 }
+const navbarLabels = Object.keys(navbar);
+
+function NavbarLinks() {
+    return <>
+        <div className="flex flex-col md:flex-row gap-2 md:gap-12">
+            {navbarLabels.map(key => {
+                const destination = navbar[key as keyof typeof navbar];
+
+                return <div>
+                    <a className="text-base" href={destination}>{key}</a>
+                </div>
+            })}
+        </div>
+
+        <a href="https://github.com/zaida04" className="flex flex-row gap-2 items-center">
+            <Github />
+            <p className="text-sm">View on GitHub</p>
+        </a>
+    </>
+}
 
 export default function Navbar() {
     const [show, setShow] = useState(true);
 
-    return <div className="flex flex-row justify-between md:block md:p-8 p-4">
-        {show ? <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-            <div className="flex flex-col md:flex-row gap-2 md:gap-12">
-                {Object.keys(navbar).map(key => {
-                    const destination = navbar[key as keyof typeof navbar];
-
-                    return <div>
-                        <a className="text-base" href={destination}>{key}</a>
-                    </div>
-                })}
-            </div>
-
-            <a href="https://github.com/zaida04" className="flex flex-row gap-2 items-center">
-                <Github />
-                <p className="text-sm">View on GitHub</p>
-            </a>
-        </div> : <div />}
+    return <div className="flex flex-row justify-end md:justify-between md:block md:p-8 p-4">
+        <div className="hidden md:flex flex-col gap-4 md:flex-row md:justify-between">
+            <NavbarLinks />
+        </div>
 
         <div className="md:hidden absolute right-8">
             <Menu onClick={() => setShow(!show)} size={40} />
         </div>
+
+        {show && <div className="flex flex-col w-full gap-4">
+            <NavbarLinks />
+        </div>}
     </div>
 }
