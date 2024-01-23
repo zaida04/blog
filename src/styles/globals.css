@@ -12,14 +12,14 @@
     }
 
     h3 {
-        @apply text-white text-2xl font-bold
+        @apply text-white text-2xl font-semibold
     }
 
     p {
         @apply text-lg font-normal
     }
 
-    a { 
+    a {
         @apply underline underline-offset-2 hover:text-white transition-colors
     }
 

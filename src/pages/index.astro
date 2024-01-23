@@ -15,10 +15,25 @@ import { getCollection } from "astro:content";
 import Link from "../components/Link";
 import { colors } from "../utils/links";
 
-const project_sections: Record<string, keyof typeof projects_data> = {
-    "Websites & Fullstack": "sites",
-    "Backend & Bots": "backends",
-    Libraries: "libraries",
+const project_sections: Record<
+    string,
+    { slug: keyof typeof projects_data; description: string }
+> = {
+    "Websites & Fullstack": {
+        slug: "sites",
+        description:
+            "These are full-stack or frontend-only projects that I've created. For full-stack, these will include a backend and database in the project as well.",
+    },
+    "Backend & Bots": {
+        slug: "backends",
+        description:
+            "These are backend-only projects that I've created. Some are chat-bots, APIs, proxies, or other.",
+    },
+    Libraries: {
+        slug: "libraries",
+        description:
+            "These are open-source libraries that I've created. These are used by myself and others to make it easier to build their projects.",
+    },
 };
 
 const allPosts = await getCollection("posts");
@@ -112,7 +127,7 @@ const allPosts = await getCollection("posts");
                 </div>
 
                 <div class="mt-8 md:mt-6 mb-8 md:mb-0">
-                    <h3>Coding Stats</h3>
+                    <h3 class="underline underline-offset-2">Coding Stats</h3>
                     {
                         Object.keys(wakatime_data).map((year) => (
                             <CodingTime
@@ -140,19 +155,28 @@ const allPosts = await getCollection("posts");
     </div>
 
     <div id="projects" class="flex flex-col gap-16">
-        <div class="flex flex-col gap-6">
-            <h2>Featured Projects</h2>
+        <div class="flex flex-col gap-12">
+            <div>
+                <h2>Featured Projects</h2>
+                <p>
+                    These are the projects that I believe display a large amount
+                    of knowlege I've accumulate over the years.
+                </p>
+            </div>
             {
                 Object.entries(project_sections).map(
                     ([title, json_section]) => (
-                        <>
-                            <h3>{title}</h3>
-                            <div class="flex flex-row gap-4 overflow-x-auto pb-4">
-                                {projects_data[json_section].map((project) => (
-                                    <ProjectCard {...project} />
-                                ))}
+                        <div>
+                            <h3 class="font-normal">{title}</h3>
+                            <p>{json_section.description}</p>
+                            <div class="flex flex-row gap-4 overflow-x-auto pb-4 mt-4">
+                                {projects_data[json_section.slug].map(
+                                    (project) => (
+                                        <ProjectCard {...project} />
+                                    ),
+                                )}
                             </div>
-                        </>
+                        </div>
                     ),
                 )
             }
