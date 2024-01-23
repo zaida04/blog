@@ -29,7 +29,7 @@ function NavbarLinks() {
 }
 
 export default function Navbar() {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
 
     return <div className="flex flex-row justify-end md:justify-between md:block md:p-8 p-4">
         <div className="hidden md:flex flex-col gap-4 md:flex-row md:justify-between">
