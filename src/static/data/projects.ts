@@ -9,7 +9,7 @@ export const projects_data = {
 				members: "100,000+",
 			},
 			description:
-				"Site for Yoki, a multipurpose bot for guilded.gg. Allows you to configure the bot, view the commands, invite it to your server, and more.",
+				"Site for Yoki, a multipurpose bot for guilded.gg. A landing page and fully functional dashboard allowing you to configure the bot and explore the documentation.",
 			tags: ["TypeScript", "Next.JS", "React"],
 			links: {
 				github: "https://github.com/yoki-labs",
@@ -20,7 +20,7 @@ export const projects_data = {
 			title: "nico.engineer",
 			statistics: "This site!",
 			description:
-				"My personal website. Allows you to learn more about me, my projects, and more. I apply whatever I learn about frontend to this site.",
+				"My personal website. Allows you to learn more my projects and see what I'm all about. I apply whatever I learn about frontend to this site.",
 			tags: ["TypeScript", "Astro", "React"],
 			links: {
 				github: "https://github.com/zaida04/blog",
@@ -30,7 +30,7 @@ export const projects_data = {
 		{
 			title: "Loggregator",
 			statistics: "In Progress",
-			description: "Store, view, & search your logs online. That's it. Nothing complicated, only what you need.",
+			description: "Store, view, & search your logs online from your serverless functions. That's it. Nothing complicated, only what you need.",
 			tags: ["TypeScript", "SvelteKit", "Svelte"],
 			links: {
 				github: "https://github.com/zaida04/loggregator",
@@ -38,22 +38,8 @@ export const projects_data = {
 			},
 		},
 		{
-			title: "Evalx.sh",
-			statistics: "In Progress",
-			description:
-				"Code. Post. Done. You give us your code, we take care of running it. You focus on what matters, building great applications.",
-			tags: ["TypeScript", "Next.JS", "Node.JS", "Docker", "React"],
-			links: {
-				github: "https://github.com/zaida04/evalx.sh",
-				website: "https://evalx.sh",
-			},
-		},
-		{
 			title: "Guilded.JS Docs",
-			statistics: {
-				downloads: "13,000+",
-			},
-			description: "Docs site for Guilded.JS. Allows you to learn how to use the library and get started with it.",
+			description: "Landing site for Guilded.JS. An interface to explore the documentation, read the guide, or visit our support server.",
 			tags: ["TypeScript", "Next.JS", "React"],
 			links: {
 				github: "https://github.com/zaida04/guilded.js",
@@ -80,7 +66,7 @@ export const projects_data = {
 			statistics: {
 				servers: "50+",
 			},
-			description: "A service for generating SVG shields for your guilded.gg server.",
+			description: "A service for generating SVG shields for your guilded.gg server. Built for GitHub READMEs.",
 			tags: ["TypeScript", "Bun", "HTTP"],
 			links: {
 				github: "https://github.com/yoki-labs/guilded-shields",
@@ -90,30 +76,12 @@ export const projects_data = {
 		{
 			title: "Events Proxy",
 			description:
-				"A service for proxying guilded WS events to HTTP servers. Allows you to build your bots in a serverless environment.",
+				"A service for proxying guilded WS events to HTTP servers. Allows you to build your bots in a serverless environment, while we handle the scaling.",
 			tags: ["TypeScript", "Node.JS", "WebSocket", "HTTP"],
 			links: {
 				github: "https://github.com/zaida04/events-proxy",
 			},
-		},
-		{
-			title: "Voicechat Moderator",
-			statistics: "Retired",
-			description:
-				"A Discord bot that gives you piece of mind knowing you are free from obnoxious intrusions in your Discord voice channel.",
-			tags: ["TypeScript", "Node.JS", "Discord.JS", "WebSocket", "HTTP"],
-			links: {
-				github: "https://github.com/zaida04/voicechat-moderator",
-			},
-		},
-		{
-			title: "Webhook Runner",
-			description: "A simple webhook runner. Supports running webhooks on your server from a github action.",
-			tags: ["TypeScript", "Bun", "HTTP"],
-			links: {
-				github: "https://github.com/zaida04/webhook-runer",
-			},
-		},
+		}
 	],
 	libraries: [
 		{
@@ -123,38 +91,11 @@ export const projects_data = {
 				stars: "67",
 			},
 			description:
-				"Tools for creating bots with the guilded.gg bot API. Usable in either JavaScript or TypeScript projects.",
+				"A library for creating bots with the guilded.gg bot API. Usable in either JavaScript or TypeScript projects.",
 			tags: ["TypeScript", "Node.JS", "WebSocket", "HTTP"],
 			links: {
 				github: "https://github.com/zaida04/guilded.js",
 				website: "https://guilded.js.org",
-			},
-		},
-		{
-			title: "Loggregator Adapters",
-			description:
-				"Adapters for the Loggregator API. Allows you to send logs to Loggregator from your application. Comes with adapters for your favorite logging plugins.",
-			tags: ["TypeScript", "Node.JS", "HTTP"],
-			links: {
-				github: "https://github.com/zaida04/loggregator-adapters",
-			},
-		},
-		{
-			title: "Tomlenv",
-			description:
-				"Read and inject environment variables from a .toml file in Node.JS. Supports overrides, multiple environments, and more. Inspired by dotenv.",
-			tags: ["Node.JS"],
-			links: {
-				github: "https://github.com/zaida04/tomlenv",
-			},
-		},
-		{
-			title: "Config Converter",
-			description:
-				"Convert your config files from JS to JSON or vice-versa. Useful for migrating configs like ESLint and more with a simple command.",
-			tags: ["Node.JS"],
-			links: {
-				github: "https://github.com/zaida04/config-convert",
 			},
 		},
 		{
@@ -169,6 +110,15 @@ export const projects_data = {
 				github: "https://github.com/zaida04/quizizz.js",
 			},
 		},
+		{
+			title: "Tomlenv",
+			description:
+				"Read and inject environment variables from a .toml file in Node.JS. Supports overrides, multiple environments, and more. Inspired by dotenv.",
+			tags: ["Node.JS"],
+			links: {
+				github: "https://github.com/zaida04/tomlenv",
+			},
+		}
 	],
 } as {
 	sites: ProjectProps[];
