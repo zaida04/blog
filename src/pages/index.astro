@@ -129,7 +129,9 @@ const allPosts = await getCollection("posts");
                 <div
                     class="bg-slate-800/50 border-slate-800/50 border-4 h-fit w-fit px-4 py-2 my-1 rounded-xl"
                 >
-                    <h3 class="font-normal">Coding Stats</h3>
+                    <h3 class="font-normal text-lg md:text-2xl">
+                        Coding Stats
+                    </h3>
                     {
                         Object.keys(wakatime_data).map((year) => (
                             <CodingTime
@@ -173,7 +175,7 @@ const allPosts = await getCollection("posts");
                 knowlege I've accumulate over the years.
             </p>
         </div>
-        <div class="ml-4 flex flex-col gap-12">
+        <div class="ml-1 md:ml-4 flex flex-col gap-12">
             {
                 Object.entries(project_sections).map(
                     ([title, json_section]) => (
