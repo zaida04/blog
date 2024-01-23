@@ -9,7 +9,7 @@ import PageLayout from "../components/layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
 import CodingTime from "../components/coding_time/CodingTime.astro";
 import BlogCard from "../components/blog/BlogCard";
-import { Github, Mail } from "lucide-react";
+import { ArrowUp, Github, Mail } from "lucide-react";
 import CompetitionCard from "../components/competition/CompetitionCard";
 import { getCollection } from "astro:content";
 import Link from "../components/Link";
@@ -126,8 +126,10 @@ const allPosts = await getCollection("posts");
                     </a>
                 </div>
 
-                <div class="mt-8 md:mt-6 mb-8 md:mb-0">
-                    <h3 class="underline underline-offset-2">Coding Stats</h3>
+                <div
+                    class="bg-slate-800/50 border-slate-800/50 border-4 h-fit w-fit px-4 py-2 my-1 rounded-xl"
+                >
+                    <h3 class="font-normal">Coding Stats</h3>
                     {
                         Object.keys(wakatime_data).map((year) => (
                             <CodingTime
@@ -142,33 +144,44 @@ const allPosts = await getCollection("posts");
             </div>
         </div>
 
-        <div
-            class="bg-slate-800/50 border-slate-800/50 border-4 h-fit p-2 rounded-xl"
-        >
-            <Image
-                src={MyFace}
-                alt="Zaid's Face"
-                width={500}
-                class="rounded-xl"
-            />
+        <div class="flex flex-col gap-1 items-center">
+            <div
+                class="bg-slate-800/50 border-slate-800/50 border-4 h-fit p-2 rounded-xl"
+            >
+                <Image
+                    src={MyFace}
+                    alt="Zaid's Face"
+                    width={500}
+                    class="rounded-xl"
+                />
+            </div>
+            <div
+                class="bg-slate-800/50 border-slate-800/50 border-2 h-fit w-fit p-2 rounded-xl"
+            >
+                <p class="flex gap-1 text-xs">
+                    That's me! <ArrowUp size={16} />
+                </p>
+            </div>
         </div>
     </div>
 
-    <div id="projects" class="flex flex-col gap-16">
+    <div id="projects" class="flex flex-col gap-8">
+        <div>
+            <h2>Featured Projects</h2>
+            <p>
+                These are the projects that I believe display a large amount of
+                knowlege I've accumulate over the years.
+            </p>
+        </div>
         <div class="flex flex-col gap-12">
-            <div>
-                <h2>Featured Projects</h2>
-                <p>
-                    These are the projects that I believe display a large amount
-                    of knowlege I've accumulate over the years.
-                </p>
-            </div>
             {
                 Object.entries(project_sections).map(
                     ([title, json_section]) => (
                         <div>
                             <h3 class="font-normal">{title}</h3>
-                            <p>{json_section.description}</p>
+                            <p class="text-base w-[90%]">
+                                {json_section.description}
+                            </p>
                             <div class="flex flex-row gap-4 overflow-x-auto pb-4 mt-4">
                                 {projects_data[json_section.slug].map(
                                     (project) => (
