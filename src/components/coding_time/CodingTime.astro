@@ -1,0 +1,17 @@
+---
+interface Props {
+    year: string;
+    hours: number;
+    minutes: number;
+}
+
+const { year, hours, minutes } = Astro.props;
+---
+
+<p class="leading-loose">
+    {year}:{" "}
+    <span class="text-pink-600 font-bold">
+        {hours} hrs & {minutes} mins
+    </span>{" "}
+    spent coding.
+</p>
