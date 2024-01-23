@@ -1,4 +1,3 @@
-import RegularBlock from "./RegularBlock";
 import XMailTable from "./Tables/XMailTable";
 import Statistic from "./Statistic";
 
@@ -33,8 +32,8 @@ const MDXComponents = {
     },
     pre: (props: { children: React.ReactNode }) => {
         return (
-            <div className="overflow-x-scroll md:overflow-x-auto bg-slate-800 rounded-lg mt-4 mb-8">
-                <pre className="text-md p-4 mb-4 whitespace-pre-wrap">{props.children}</pre>
+            <div className="overflow-x-auto bg-slate-800 rounded-lg mt-4 mb-8">
+                <pre className="text-md p-4 mb-4 whitespace-pre">{props.children}</pre>
             </div>
         );
     },
@@ -53,7 +52,6 @@ const MDXComponents = {
     // biome-ignore lint/a11y/useAltText: <explanation>
     img: (props: { src: string }) => <img {...props} className="pt-8" />,
     XMailTable,
-    RegularBlock,
 };
 
 export default MDXComponents;

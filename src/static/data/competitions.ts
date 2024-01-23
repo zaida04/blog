@@ -9,7 +9,7 @@ export const competitions_data = [
 		name: "Wix Create-A-SaaS",
 		placement: "MVP",
 		track: "SaaS Track",
-		date: "7/22/2022",
+		date: "7/22/22",
 	},
 	{
 		name: "Buffalo State CS4HS",

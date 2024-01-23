@@ -16,7 +16,7 @@
     }
 
     p {
-        @apply text-lg font-medium
+        @apply text-lg font-normal
     }
 
     a { 

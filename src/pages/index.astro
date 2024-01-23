@@ -21,10 +21,10 @@ const allPosts = await getCollection("posts");
 ---
 
 <PageLayout title="Zaid's Site">
-    <div id="home" class="flex flex-row">
+    <div id="home" class="flex flex-col md:flex-row">
         <div class="flex flex-col gap-8 pr-8">
             <h1>Hello, I'm Zaid.</h1>
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col font-normal gap-4">
                 <p class="leading-loose">
                     I build full-stack stuff™ using Node.js, JavaScript,
                     TypeScript, and Python. I'm familiar with databases like
@@ -82,7 +82,7 @@ const allPosts = await getCollection("posts");
 
     <div id="competitions">
         <h2>Competitions</h2>
-        <div class="flex flex-row gap-4 mt-4">
+        <div class="flex flex-row overflow-x-auto pb-4 gap-4 mt-4">
             {
                 competitions_data.map((competition) => (
                     <CompetitionCard {...competition} />
