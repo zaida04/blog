@@ -9,10 +9,10 @@ const navbar = {
 }
 
 export default function Navbar() {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
 
     return <div className="flex flex-row justify-between md:block md:p-8 p-4">
-        <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        {show ? <div className="flex flex-col gap-4 md:flex-row md:justify-between">
             <div className="flex flex-col md:flex-row gap-2 md:gap-12">
                 {Object.keys(navbar).map(key => {
                     const destination = navbar[key as keyof typeof navbar];
@@ -27,10 +27,10 @@ export default function Navbar() {
                 <Github />
                 <p className="text-sm">View on GitHub</p>
             </a>
-        </div>
+        </div> : <div />}
 
-        <div className="md:hidden">
-            <Menu size={40} />
+        <div className="md:hidden absolute right-8">
+            <Menu onClick={() => setShow(!show)} size={40} />
         </div>
     </div>
 }
