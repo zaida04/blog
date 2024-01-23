@@ -102,7 +102,16 @@ const allPosts = await getCollection("posts");
                     />.
                 </p>
 
-                <div class="mt-8 md:mt-0">
+                <div class="flex flex-row gap-2">
+                    <a href="https://github.com/zaida04">
+                        <Github size={34} />
+                    </a>
+                    <a href="mailto:contact@nico.engineer">
+                        <Mail size={34} />
+                    </a>
+                </div>
+
+                <div class="mt-8 md:mt-6 mb-8 md:mb-0">
                     <h3>Coding Stats</h3>
                     {
                         Object.keys(wakatime_data).map((year) => (
@@ -114,11 +123,6 @@ const allPosts = await getCollection("posts");
                             />
                         ))
                     }
-                </div>
-
-                <div class="flex flex-row gap-2 mb-8">
-                    <Github />
-                    <Mail />
                 </div>
             </div>
         </div>
