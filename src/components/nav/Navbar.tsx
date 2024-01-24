@@ -15,7 +15,7 @@ function NavbarLinks() {
             {navbarLabels.map(key => {
                 const destination = navbar[key as keyof typeof navbar];
 
-                return <div>
+                return <div key={key}>
                     <a className="text-base" href={destination}>{key}</a>
                 </div>
             })}
@@ -40,7 +40,7 @@ export default function Navbar() {
             <Menu onClick={() => setShow(!show)} size={40} />
         </div>
 
-        {show && <div className="flex flex-col w-full gap-4">
+        {show && <div className="flex flex-col w-full gap-4 animate-in slide-in-from-top duration-500 ">
             <NavbarLinks />
         </div>}
     </div>

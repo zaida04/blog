@@ -13,5 +13,8 @@ export default ({
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		// @ts-ignore
+		require("tailwindcss-animate")
+	],
 } satisfies Config);
