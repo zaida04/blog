@@ -8,7 +8,7 @@ export const colors = {
 	pg: { color: "text-[#0064a5]", url: "https://www.postgresql.org/" },
 	mongo: { color: "text-[#4db33d]", url: "https://www.mongodb.com/" },
 	yoki: { color: "text-[#F5C400]", url: "https://yoki.gg" },
-	mirage: { color: "text-[#FFE5B4]", url: "https://mirage.gg" },
+	mirage: { color: "text-[#FFE5B4]", url: "https://www.miragesecurity.ai" },
 	adobe: { color: "text-[#ED2224]", url: "https://discord.gg/acc" },
 	fiveable: { color: "text-[#14ac3d]", url: "https://fiveable.me" },
 };
