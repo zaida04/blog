@@ -21,7 +21,7 @@ function NavbarLinks() {
             })}
         </div>
 
-        <a href="https://github.com/zaida04" className="flex flex-row gap-2 items-center">
+        <a href="https://github.com/zaida04/blog" className="flex flex-row gap-2 items-center">
             <Github />
             <p className="text-sm">View on GitHub</p>
         </a>
