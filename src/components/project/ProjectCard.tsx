@@ -12,6 +12,7 @@ export interface ProjectProps {
     };
 }
 export default function ProjectCard(props: ProjectProps) {
+    if (!props) return;
     return (
         <div className="flex flex-col h-fit w-fit gap-3 px-6 py-4 border-2 rounded-2xl border-slate-800/50">
             <div>
