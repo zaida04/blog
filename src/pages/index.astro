@@ -131,7 +131,7 @@ const allPosts = await getCollection("posts");
                 <div
                     class="bg-slate-800/50 border-slate-800/50 border-4 h-fit w-fit px-4 py-2 my-1 rounded-xl"
                 >
-                    <h3 class="font-normal text-lg md:text-2xl">
+                    <h3 class="font-normal text-lg md:text-2xl mb-1">
                         Coding Stats
                     </h3>
                     {
@@ -144,6 +144,11 @@ const allPosts = await getCollection("posts");
                             />
                         ))
                     }
+                    <p class="mt-2 text-sm">
+                        Tracked through <a href="https://wakatime.com/">
+                            Wakatime
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

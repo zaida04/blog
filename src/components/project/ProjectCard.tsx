@@ -21,7 +21,7 @@ export default function ProjectCard(props: ProjectProps) {
                     (typeof props.statistics === "object" ? (
                         <div className="flex flex-row gap-2 text-amber-500">
                             {Object.entries(props.statistics).map(([stat, value], index) => (
-                                <Statistic prefixDot={index !== 0} value={value} statistic={stat} />
+                                <Statistic key={stat} prefixDot={index !== 0} value={value} statistic={stat} />
                             ))}
                         </div>
                     ) : (
@@ -33,7 +33,7 @@ export default function ProjectCard(props: ProjectProps) {
 
             <div>
                 <div className="flex flex-row gap-2">
-                    {props.tags.map((tag) => <Tag>{tag}</Tag>)}
+                    {props.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
                 </div>
             </div>
 
