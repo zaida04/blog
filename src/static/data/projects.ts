@@ -3,20 +3,6 @@ import type { ProjectProps } from "../../components/project/ProjectCard";
 export const projects_data = {
 	sites: [
 		{
-			title: "Yoki (site)",
-			statistics: {
-				servers: "1,800+",
-				members: "100,000+",
-			},
-			description:
-				"Site for Yoki, a multipurpose bot for guilded.gg. A landing page and fully functional dashboard allowing you to configure the bot and explore the documentation.",
-			tags: ["TypeScript", "Next.JS", "React"],
-			links: {
-				github: "https://github.com/yoki-labs",
-				website: "https://yoki.gg",
-			},
-		},
-		{
 			title: "nico.engineer",
 			statistics: "This site!",
 			description:
@@ -25,6 +11,20 @@ export const projects_data = {
 			links: {
 				github: "https://github.com/zaida04/blog",
 				website: "https://nico.engineer",
+			},
+		},
+		{
+			title: "Yoki",
+			statistics: {
+				servers: "1,800+",
+				members: "100,000+",
+			},
+			description:
+				"The first moderation bot on guilded.gg. Comes with auto-moderation, user verification, logging, and more.",
+			tags: ["TypeScript", "Next.JS", "React"],
+			links: {
+				github: "https://github.com/yoki-labs",
+				website: "https://yoki.gg",
 			},
 		},
 		{
@@ -38,29 +38,17 @@ export const projects_data = {
 			},
 		},
 		{
-			title: "Guilded.JS Docs",
-			description: "Landing site for Guilded.JS. An interface to explore the documentation, read the guide, or visit our support server.",
-			tags: ["TypeScript", "Next.JS", "React"],
+			title: "Evalx",
+			statistics: "In Progress",
+			description: "Run arbitrary code from any supported language with just a POST request. Focus on building features your users need, leave the code running to us.",
+			tags: ["TypeScript", "Node.JS", "Next.JS", "React"],
 			links: {
-				github: "https://github.com/zaida04/guilded.js",
-				website: "https://guilded.js.org",
+				github: "https://github.com/zaida04/evalx.sh",
+				website: "https://evalx.sh",
 			},
 		},
 	],
 	backends: [
-		{
-			title: "Yoki (bot)",
-			statistics: {
-				servers: "1,800+",
-				members: "100,000+",
-			},
-			description:
-				"Yoki is Guilded's first and biggest moderation bot on the platform. Helping protect your community from bad actors, automagically.",
-			tags: ["TypeScript", "Node.JS", "WebSocket", "HTTP"],
-			links: {
-				website: "https://yoki.gg",
-			},
-		},
 		{
 			title: "Guilded Shields",
 			statistics: {
