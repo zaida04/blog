@@ -88,9 +88,6 @@ export const projects_data = {
 		},
 		{
 			title: "Quizziz.js",
-			statistics: {
-				stars: "9",
-			},
 			description:
 				"A simple wrapper for the Quizziz API. Relies on the unofficial client API, allowing you to fetch information about quizzes.",
 			tags: ["Node.JS"],
