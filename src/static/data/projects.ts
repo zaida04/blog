@@ -28,16 +28,6 @@ export const projects_data = {
 			},
 		},
 		{
-			title: "Loggregator",
-			statistics: "In Progress",
-			description: "Store, view, & search your logs online from your serverless functions. That's it. Nothing complicated, only what you need.",
-			tags: ["TypeScript", "SvelteKit", "Svelte"],
-			links: {
-				github: "https://github.com/zaida04/loggregator",
-				website: "https://loggregator.co",
-			},
-		},
-		{
 			title: "Evalx",
 			statistics: "In Progress",
 			description: "Run arbitrary code from any supported language with just a POST request. Focus on building features your users need, leave the code running to us.",
@@ -45,6 +35,16 @@ export const projects_data = {
 			links: {
 				github: "https://github.com/zaida04/evalx.sh",
 				website: "https://evalx.sh",
+			},
+		},
+		{
+			title: "Loggregator",
+			statistics: "In Progress",
+			description: "Store, view, & search your logs online from your serverless functions. That's it. Nothing complicated, only what you need.",
+			tags: ["TypeScript", "SvelteKit", "Svelte"],
+			links: {
+				github: "https://github.com/zaida04/loggregator",
+				website: "https://loggregator.co",
 			},
 		},
 	],
