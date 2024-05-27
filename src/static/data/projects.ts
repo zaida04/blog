@@ -34,7 +34,7 @@ export const projects_data = {
 			tags: ["TypeScript", "Node.JS", "Next.JS", "React"],
 			links: {
 				github: "https://github.com/zaida04/evalx.sh",
-				website: "https://evalx.sh",
+				website: "https://evalx.nico.engineer",
 			},
 		},
 		{
