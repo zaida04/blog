@@ -7,7 +7,7 @@ export const projects_data = {
 			statistics: "This site!",
 			description:
 				"My personal website. Allows you to learn more my projects and see what I'm all about. I apply whatever I learn about frontend to this site.",
-			tags: ["TypeScript", "Astro", "React"],
+			tags: ["TypeScript", "Astro", "React", "Tailwind"],
 			links: {
 				github: "https://github.com/zaida04/blog",
 				website: "https://nico.engineer",
@@ -25,6 +25,16 @@ export const projects_data = {
 			links: {
 				github: "https://github.com/yoki-labs",
 				website: "https://yoki.gg",
+			},
+		},
+		{
+			title: "Y.com",
+			statistics: "Class Project",
+			description: "Built for CSE 312, this X.com alternative gives you a place to post your ramblings to no one. Also provides a global drawing board.",
+			tags: ["TypeScript", "Next.JS", "React", "TRPC.io", "Tailwind"],
+			links: {
+				github: "https://github.com/zaida04/ycom",
+				website: "https://y.nico.engineer",
 			},
 		},
 		{
