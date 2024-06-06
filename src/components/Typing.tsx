@@ -19,10 +19,10 @@ export default function Typing(props: { text: string }) {
         }
     }, []);
 
-    return <span className="flex gap-1">
-        <h1>{props.text.slice(0, index)}</h1>
-        <span className="blinking-indicator h-full opacity-0 bg-white text-white">
+    return <div className="flex gap-1">
+        <h1 className="text-4xl md:text-6xl">{props.text.slice(0, index)}</h1>
+        <span className="blinking-indicator opacity-0 bg-white text-white">
             ▮
         </span>
-    </span>
+    </div>
 } 

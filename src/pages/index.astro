@@ -15,6 +15,7 @@ import { getCollection } from "astro:content";
 import Link from "../components/Link";
 import { colors } from "../utils/links";
 import Typing from "../components/Typing";
+import ContactForm from "../components/contact-me/ContactForm";
 
 const project_sections: Record<
   string,
@@ -201,12 +202,17 @@ const allPosts = await getCollection("posts");
 
   <div id="blog">
     <h2>Blog</h2>
-    <div class="flex flex-col gap-10 mt-8">
-      {
-        allPosts
-          .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
-          .map((post) => <BlogCard {...post} />)
-      }
+
+    <div class="flex flex-col gap-4 md:flex-row">
+      <div class="flex flex-col gap-10 mt-8 md:w-3/5">
+        {
+          allPosts
+            .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+            .map((post) => <BlogCard {...post} />)
+        }
+      </div>
+
+      <ContactForm client:load />
     </div>
   </div>
 </PageLayout>
