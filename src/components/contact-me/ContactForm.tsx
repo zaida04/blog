@@ -70,7 +70,7 @@ export default function ContactForm() {
             })} />
 
         <div className="flex flex-col">
-            <label>Your Message</label>
+            <label className="text-base pb-1">Your Message</label>
             <textarea
                 placeholder="Message"
                 className="rounded-sm text-base px-2"
@@ -89,7 +89,7 @@ export default function ContactForm() {
 
 function InputWithLabel(props: { label: string, type: string; formRegister: any; error?: string }) {
     return <div className="flex flex-col">
-        <label className="text-base">{props.label}</label>
+        <label className="text-base pb-1">{props.label}</label>
         <input type={props.type} className="px-2 rounded-sm text-base py-1" {...props.formRegister} />
         <p className="text-red-300 text-base">{props.error}</p>
     </div>
