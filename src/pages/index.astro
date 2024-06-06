@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import MyFace from "../static/imgs/my_face.png";
-import { projects_data } from "../static/data/projects";
-import { competitions_data } from "../static/data/competitions";
-import { wakatime_data } from "../static/data/wakatime";
+import { projects_data } from "../content/data/projects";
+import { competitions_data } from "../content/data/competitions";
+import { wakatime_data } from "../content/data/wakatime";
 
 import PageLayout from "../components/layouts/PageLayout.astro";
 import ProjectCard from "../components/project/ProjectCard";
@@ -17,213 +17,196 @@ import { colors } from "../utils/links";
 import Typing from "../components/Typing";
 
 const project_sections: Record<
-    string,
-    { slug: keyof typeof projects_data; description: string }
+  string,
+  { slug: keyof typeof projects_data; description: string }
 > = {
-    "Websites & Fullstack": {
-        slug: "sites",
-        description:
-            "These are full-stack or frontend-only projects that I've created.",
-    },
-    "Backend & Bots": {
-        slug: "backends",
-        description:
-            "These are backend-only projects that I've created. Some are chat-bots, APIs, proxies, or other.",
-    },
-    Libraries: {
-        slug: "libraries",
-        description:
-            "These are open-source libraries that I've created. These are used by myself and others to make it easier to build their projects.",
-    },
+  "Websites & Fullstack": {
+    slug: "sites",
+    description:
+      "These are full-stack or frontend-only projects that I've created.",
+  },
+  "Backend & Bots": {
+    slug: "backends",
+    description:
+      "These are backend-only projects that I've created. Some are chat-bots, APIs, proxies, or other.",
+  },
+  Libraries: {
+    slug: "libraries",
+    description:
+      "These are open-source libraries that I've created. These are used by myself and others to make it easier to build their projects.",
+  },
 };
 
 const allPosts = await getCollection("posts");
 ---
 
 <PageLayout title="Zaid's Site">
-    <div id="home" class="flex flex-col md:flex-row">
-        <div class="flex flex-col gap-8 pr-8">
-            <Typing client:load text="Hello, I'm Zaid." />
+  <div id="home" class="flex flex-col md:flex-row">
+    <div class="flex flex-col gap-8 pr-8">
+      <Typing client:load text="Hello, I'm Zaid." />
 
-            <div class="flex flex-col font-normal gap-4">
-                <p class="leading-loose">
-                    I build full-stack stuff™ using
-                    <Link
-                        href={colors.node.url}
-                        className={colors.node.color}
-                        text="Node.js"
-                    />,
-                    <Link
-                        href={colors.javascript.url}
-                        className={colors.javascript.color}
-                        text="JavaScript"
-                    />,
-                    <Link
-                        href={colors.typescript.url}
-                        className={colors.typescript.color}
-                        text="TypeScript"
-                    />, and
-                    <Link
-                        href={colors.python.url}
-                        className={colors.python.color}
-                        text="Python"
-                    />. I'm familiar with databases like
-                    <Link
-                        href={colors.pg.url}
-                        className={colors.pg.color}
-                        text="PostgreSQL"
-                    /> and
-                    <Link
-                        href={colors.mongo.url}
-                        className={colors.mongo.color}
-                        text="MongoDB"
-                    />.
-                </p>
+      <div class="flex flex-col font-normal gap-4">
+        <p class="leading-loose">
+          I build full-stack stuff™ using
+          <Link
+            href={colors.node.url}
+            className={colors.node.color}
+            text="Node.js"
+          />,
+          <Link
+            href={colors.javascript.url}
+            className={colors.javascript.color}
+            text="JavaScript"
+          />,
+          <Link
+            href={colors.typescript.url}
+            className={colors.typescript.color}
+            text="TypeScript"
+          />, and
+          <Link
+            href={colors.python.url}
+            className={colors.python.color}
+            text="Python"
+          />. I'm familiar with databases like
+          <Link
+            href={colors.pg.url}
+            className={colors.pg.color}
+            text="PostgreSQL"
+          /> and
+          <Link
+            href={colors.mongo.url}
+            className={colors.mongo.color}
+            text="MongoDB"
+          />.
+        </p>
 
-                <p class="leading-loose">
-                    I'm currently really interested in learning lower-level
-                    languages such as
-                    <Link
-                        href={colors.rust.url}
-                        className={colors.rust.color}
-                        text="Rust"
-                    /> and
-                    <Link
-                        href={colors.elixir.url}
-                        className={colors.elixir.color}
-                        text="Elixir"
-                    />.
-                </p>
+        <p class="leading-loose">
+          I'm currently really interested in learning lower-level languages such
+          as
+          <Link
+            href={colors.rust.url}
+            className={colors.rust.color}
+            text="Rust"
+          /> and
+          <Link
+            href={colors.elixir.url}
+            className={colors.elixir.color}
+            text="Elixir"
+          />.
+        </p>
 
-                <p class="leading-loose">
-                    I'm the founder of
-                    <Link
-                        href={colors.yoki.url}
-                        className={colors.yoki.color}
-                        text="Yoki"
-                    />. On the side, I am a Community Manager for
-                    <Link
-                        href={colors.adobe.url}
-                        className={colors.adobe.color}
-                        text="Adobe Creative Career"
-                    />. Previously a Software Engineer Intern at
-                    <Link
-                        href={colors.mirage.url}
-                        className={colors.mirage.color}
-                        text="Mirage Security"
-                    /> &
-                    <Link
-                        href={colors.fiveable.url}
-                        className={colors.fiveable.color}
-                        text="Fiveable"
-                    />.
-                </p>
+        <p class="leading-loose">
+          I'm the founder of
+          <Link
+            href={colors.yoki.url}
+            className={colors.yoki.color}
+            text="Yoki"
+          />. On the side, I am a Community Manager for
+          <Link
+            href={colors.adobe.url}
+            className={colors.adobe.color}
+            text="Adobe Creative Career"
+          />. Previously a Software Engineer Intern at
+          <Link
+            href={colors.mirage.url}
+            className={colors.mirage.color}
+            text="Mirage Security"
+          /> &
+          <Link
+            href={colors.fiveable.url}
+            className={colors.fiveable.color}
+            text="Fiveable"
+          />.
+        </p>
 
-                <div class="flex flex-row gap-2">
-                    <a href="https://github.com/zaida04">
-                        <Github size={34} />
-                    </a>
-                    <a href="mailto:contact@nico.engineer">
-                        <Mail size={34} />
-                    </a>
-                </div>
+        <div class="flex flex-row gap-2">
+          <a href="https://github.com/zaida04">
+            <Github size={34} />
+          </a>
+          <a href="mailto:contact@nico.engineer">
+            <Mail size={34} />
+          </a>
+        </div>
 
-                <div
-                    class="bg-slate-800/50 border-slate-800/50 border-4 h-fit w-fit px-4 py-2 my-1 rounded-xl"
-                >
-                    <h3 class="font-normal text-lg md:text-2xl mb-1">
-                        Coding Stats
-                    </h3>
-                    {
-                        Object.keys(wakatime_data).map((year) => (
-                            <CodingTime
-                                year={year}
-                                {...wakatime_data[
-                                    year as keyof typeof wakatime_data
-                                ]}
-                            />
-                        ))
-                    }
-                    <p class="mt-2 text-sm">
-                        Tracked through <a href="https://wakatime.com/">
-                            Wakatime
-                        </a>
-                    </p>
-                </div>
+        <div
+          class="bg-slate-800/50 border-slate-800/50 border-4 h-fit w-fit px-4 py-2 my-1 rounded-xl"
+        >
+          <h3 class="font-normal text-lg md:text-2xl mb-1">Coding Stats</h3>
+          {
+            Object.keys(wakatime_data).map((year) => (
+              <CodingTime
+                year={year}
+                {...wakatime_data[year as keyof typeof wakatime_data]}
+              />
+            ))
+          }
+          <p class="mt-2 text-sm">
+            Tracked through <a href="https://wakatime.com/"> Wakatime </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1 items-center">
+      <div
+        class="bg-slate-800/50 border-slate-800/50 border-4 h-fit p-2 rounded-xl"
+      >
+        <Image src={MyFace} alt="Zaid's Face" width={500} class="rounded-xl" />
+      </div>
+      <div
+        class="bg-slate-800/50 border-slate-800/50 border-2 h-fit w-fit p-2 rounded-xl"
+      >
+        <p class="flex gap-1 text-xs">
+          That's me! <ArrowUp size={16} />
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="projects" class="flex flex-col gap-6">
+    <div>
+      <h2>Featured Projects</h2>
+      <p>
+        These are the projects that I believe display the knowlege I've
+        accumulated over the years.
+      </p>
+    </div>
+    <div class="ml-1 md:ml-4 flex flex-col gap-12">
+      {
+        Object.entries(project_sections).map(([title, json_section]) => (
+          <div>
+            <h3 class="font-normal">{title}</h3>
+            <p class="text-base w-[90%]">{json_section.description}</p>
+            <div class="flex flex-row gap-4 overflow-x-auto pb-4 mt-4">
+              {projects_data[json_section.slug].map((project) => (
+                <ProjectCard {...project} />
+              ))}
             </div>
-        </div>
-
-        <div class="flex flex-col gap-1 items-center">
-            <div
-                class="bg-slate-800/50 border-slate-800/50 border-4 h-fit p-2 rounded-xl"
-            >
-                <Image
-                    src={MyFace}
-                    alt="Zaid's Face"
-                    width={500}
-                    class="rounded-xl"
-                />
-            </div>
-            <div
-                class="bg-slate-800/50 border-slate-800/50 border-2 h-fit w-fit p-2 rounded-xl"
-            >
-                <p class="flex gap-1 text-xs">
-                    That's me! <ArrowUp size={16} />
-                </p>
-            </div>
-        </div>
+          </div>
+        ))
+      }
     </div>
+  </div>
 
-    <div id="projects" class="flex flex-col gap-6">
-        <div>
-            <h2>Featured Projects</h2>
-            <p>
-                These are the projects that I believe display the knowlege I've
-                accumulated over the years.
-            </p>
-        </div>
-        <div class="ml-1 md:ml-4 flex flex-col gap-12">
-            {
-                Object.entries(project_sections).map(
-                    ([title, json_section]) => (
-                        <div>
-                            <h3 class="font-normal">{title}</h3>
-                            <p class="text-base w-[90%]">
-                                {json_section.description}
-                            </p>
-                            <div class="flex flex-row gap-4 overflow-x-auto pb-4 mt-4">
-                                {projects_data[json_section.slug].map(
-                                    (project) => (
-                                        <ProjectCard {...project} />
-                                    ),
-                                )}
-                            </div>
-                        </div>
-                    ),
-                )
-            }
-        </div>
+  <div id="competitions">
+    <h2>Competitions</h2>
+    <div class="flex flex-row overflow-x-auto pb-4 gap-4 mt-4">
+      {
+        competitions_data.map((competition) => (
+          <CompetitionCard {...competition} />
+        ))
+      }
     </div>
+  </div>
 
-    <div id="competitions">
-        <h2>Competitions</h2>
-        <div class="flex flex-row overflow-x-auto pb-4 gap-4 mt-4">
-            {
-                competitions_data.map((competition) => (
-                    <CompetitionCard {...competition} />
-                ))
-            }
-        </div>
+  <div id="blog">
+    <h2>Blog</h2>
+    <div class="flex flex-col gap-10 mt-8">
+      {
+        allPosts
+          .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+          .map((post) => <BlogCard {...post} />)
+      }
     </div>
-
-    <div id="blog">
-        <h2>Blog</h2>
-        <div class="flex flex-col gap-10 mt-8">
-            {
-                allPosts
-                    .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
-                    .map((post) => <BlogCard {...post} />)
-            }
-        </div>
-    </div>
+  </div>
 </PageLayout>
