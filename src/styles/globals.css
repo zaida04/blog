@@ -3,48 +3,48 @@
 @tailwind utilities;
 
 @layer base {
-    h1 {
-        @apply text-white text-6xl font-[800]
-    }
+  h1 {
+    @apply text-white text-6xl font-[800];
+  }
 
-    h2 {
-        @apply text-white text-4xl font-bold
-    }
+  h2 {
+    @apply text-white text-4xl font-bold;
+  }
 
-    h3 {
-        @apply text-white text-2xl font-semibold
-    }
+  h3 {
+    @apply text-white text-2xl font-semibold;
+  }
 
-    p {
-        @apply text-lg font-normal
-    }
+  p {
+    @apply text-lg font-normal;
+  }
 
-    a {
-        @apply underline underline-offset-2 hover:text-white transition-colors
-    }
+  a {
+    @apply underline underline-offset-2 hover:text-white transition-colors;
+  }
 
-    body {
-        @apply font-wotfard text-gray-400 bg-dark-base min-h-screen;
-    }
+  body {
+    @apply font-wotfard text-gray-400 bg-dark-base min-h-screen;
+  }
 
-    html {
-        @apply overflow-y-scroll scroll-smooth;
-    }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
 
-    * {
-        scrollbar-width: auto;
-        scrollbar-color: #8f54a0 #ffffff;
-    }
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #8f54a0 #0f1117;
+  }
 
-    *::-webkit-scrollbar {
-        @apply w-[12px];
-    }
+  *::-webkit-scrollbar {
+    @apply w-[12px];
+  }
 
-    *::-webkit-scrollbar-track {
-        @apply bg-white
-    }
+  *::-webkit-scrollbar-track {
+    @apply bg-slate-800;
+  }
 
-    *::-webkit-scrollbar-thumb {
-        @apply bg-slate-800 border border-white;
-    }
+  *::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 border border-white;
+  }
 }

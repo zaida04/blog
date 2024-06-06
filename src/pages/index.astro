@@ -216,6 +216,7 @@ const allPosts = await getCollection("posts");
       <div class="flex flex-col gap-10 mt-8 md:w-3/5">
         {
           allPosts
+            .filter((project) => project.data.visible !== false)
             .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
             .map((post) => <BlogCard {...post} />)
         }
