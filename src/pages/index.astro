@@ -172,19 +172,28 @@ const allPosts = await getCollection("posts");
         accumulated over the years.
       </p>
     </div>
-    <div class="ml-1 md:ml-4 flex flex-col gap-12">
+    <div class="flex flex-col">
       {
-        Object.entries(project_sections).map(([title, json_section]) => (
-          <div>
-            <h3 class="font-normal">{title}</h3>
-            <p class="text-base w-[90%]">{json_section.description}</p>
-            <div class="flex flex-row gap-4 overflow-x-auto pb-4 mt-4">
-              {projects_data[json_section.slug].map((project) => (
-                <ProjectCard {...project} />
-              ))}
-            </div>
-          </div>
-        ))
+        Object.entries(project_sections).map(
+          ([title, json_section], index, arr) => {
+            const isLast = index === arr.length - 1;
+
+            return (
+              <div class="md:border-l-2 border-slate-700 md:pl-8">
+                <h3 class="font-normal">{title}</h3>
+                <p class="text-base w-[90%] pb-4">{json_section.description}</p>
+                <div class="flex flex-row gap-4 overflow-x-auto">
+                  {projects_data[json_section.slug].map((project) => (
+                    <ProjectCard {...project} />
+                  ))}
+                </div>
+                {!isLast && (
+                  <div class="w-3/5 h-[2px] bg-slate-700 mx-auto my-4 md:my-8" />
+                )}
+              </div>
+            );
+          }
+        )
       }
     </div>
   </div>
