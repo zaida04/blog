@@ -19,7 +19,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     if (process.env.NODE_ENV === "production") {
         const identifier = clientAddress ?? body.email;
         const { success, remaining } = await rateLimit(identifier);
-        console.log(remaining);
+        console.log("Remaining left for this ratelimit: ", remaining);
 
         if (!success) {
             return new Response("You are sending too many requests. Please try again later.", { status: 429 })
