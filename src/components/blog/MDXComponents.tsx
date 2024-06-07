@@ -1,22 +1,35 @@
 import XMailTable from "./Tables/XMailTable";
 import Statistic from "./Statistic";
 
+const slugizeheader = (header: any) => {
+    return header.props.value.toString().toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+}
+const headerwithlink = "font-bold font-rubik py-4 text-center md:text-left hover:underline underline-offset-2 hover:cursor-pointer"
+
 const MDXComponents = {
-    h1: (props: { children: React.ReactNode }) => (
-        <h1 className="text-4xl font-bold font-rubik py-4 text-center md:text-left" {...props}>
+    h1: (props: { children: React.ReactNode }) => {
+        const slug = slugizeheader(props.children as string);
+
+        return <a href={`#${slug}`} className="no-underline">
+            <h1 id={slug} className={`text-4xl ${headerwithlink}`} {...props}>
+                {props.children}
+            </h1>
+        </a>
+    },
+    h2: (props: { children: React.ReactNode }) => {
+        const slug = slugizeheader(props.children as string);
+
+        return <h2 id={slug} className={`text-2xl md:text-3xl ${headerwithlink}`} {...props}>
             {props.children}
-        </h1>
-    ),
-    h2: (props: { children: React.ReactNode }) => (
-        <h1 className="text-2xl md:text-3xl font-bold font-rubik py-4 text-center md:text-left" {...props}>
+        </h2>
+    },
+    h3: (props: { children: React.ReactNode }) => {
+        const slug = slugizeheader(props.children as string);
+
+        return <h3 id={slug} className={`text-xl md:text-2xl ${headerwithlink}`} {...props}>
             {props.children}
-        </h1>
-    ),
-    h3: (props: { children: React.ReactNode }) => (
-        <h1 className="text-xl md:text-2xl font-bold font-rubik py-4 text-center md:text-left" {...props}>
-            {props.children}
-        </h1>
-    ),
+        </h3>
+    },
     a: (props: { children: React.ReactNode; href: string }) => {
         return (
             <a className="decoration-pink-500" href={props.href}>
