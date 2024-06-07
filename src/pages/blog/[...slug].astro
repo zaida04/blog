@@ -10,6 +10,7 @@ export async function getStaticPaths() {
     props: { entry },
   }));
 }
+export const prerender = true;
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
