@@ -19,7 +19,7 @@ const MDXComponents = {
     ),
     a: (props: { children: React.ReactNode; href: string }) => {
         return (
-            <a href={props.href}>
+            <a className="decoration-pink-500" href={props.href}>
                 <Statistic hover={true}>{props.children}</Statistic>
             </a>
         );
@@ -41,7 +41,7 @@ const MDXComponents = {
         return <blockquote className="indent-0 rounded-lg bg-slate-800 px-4 pt-4 mb-4">{props.children}</blockquote>;
     },
     li: (props: { children: React.ReactNode }) => {
-        return <li className="list-desc text-lg">{props.children}</li>;
+        return <li className="md:ml-8 ml-4 pl-2 mb-4 list-disc text-lg">{props.children}</li>;
     },
     ol: (props: { children: React.ReactNode }) => {
         return <ol className="md:indent-8 ml-2 px-2 md:px-4 list-decimal">{props.children}</ol>;
