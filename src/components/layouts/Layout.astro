@@ -3,23 +3,36 @@ import "../../styles/fonts.css";
 import "../../styles/globals.css";
 
 interface Props {
-    title: string;
+  title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
-    </head>
-    <body>
-        <slot />
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content={description ??
+        "I'm Zaid. This is my blog, where I write about random stuff."}
+    />
+    <meta
+      property="og:description"
+      content={description ??
+        "I'm Zaid. This is my blog, where I write about random stuff."}
+    />
+    <meta property="og:title" content={`${title} | Nico's Blog`} />
+    <meta property="og:image" content="/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | Nico's Blog</title>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>

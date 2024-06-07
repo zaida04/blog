@@ -4,51 +4,49 @@ import PageLayout from "../../components/layouts/PageLayout.astro";
 import MDXComponents from "../../components/blog/MDXComponents";
 
 export async function getStaticPaths() {
-    const blogEntries = await getCollection("posts");
-    return blogEntries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
+  const blogEntries = await getCollection("posts");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<PageLayout title={entry.data.title}>
-    <div>
-        <p class="pb-8">
-            <a class="text-base no-underline" href="/"> ← Back</a>
-        </p>
-        <div class="pb-14">
-            <h1
-                class="mx-auto font-semibold text-5xl text-white text-center pb-4"
-            >
-                {entry.data.title}
-            </h1>
-            <p
-                class="mx-auto font-medium text-lg px-2 text-gray-500 text-center max-w-[30em]"
-            >
-                {entry.data.description}
-            </p>
-        </div>
-
-        <div class="mx-auto w-full text-xl text-white py-8 md:px-4">
-            <div>
-                <Content components={{ ...MDXComponents }} />
-            </div>
-
-            <div class="mt-4 p-4 bg-slate-800 rounded-lg">
-                <p class="font-normal">
-                    Thanks for reading this article! Check me out on{" "}
-                    <a
-                        class="text-blue-500 font-semibold hover:text-blue-800 transition-colors"
-                        href="https://github.com/zaida04"
-                    >
-                        GitHub!
-                    </a>
-                </p>
-            </div>
-        </div>
+<PageLayout title={entry.data.title} description={entry.data.description}>
+  <div>
+    <p class="pb-8">
+      <a class="text-base no-underline" href="/"> ← Back</a>
+    </p>
+    <div class="pb-14">
+      <h1 class="mx-auto font-semibold text-5xl text-white text-center pb-4">
+        {entry.data.title}
+      </h1>
+      <p
+        class="mx-auto font-medium text-lg px-2 text-gray-500 text-center max-w-[30em]"
+      >
+        {entry.data.description}
+      </p>
     </div>
+
+    <div class="mx-auto w-full text-xl text-white py-8 md:px-4">
+      <div>
+        <Content components={{ ...MDXComponents }} />
+      </div>
+
+      <div class="mt-4 p-4 bg-slate-800 rounded-lg">
+        <p class="font-normal">
+          Thanks for reading this article! Check me out on{" "}
+          <a
+            class="text-blue-500 font-semibold hover:text-blue-800 transition-colors"
+            href="https://github.com/zaida04"
+          >
+            GitHub!
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 </PageLayout>
