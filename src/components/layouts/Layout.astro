@@ -1,6 +1,7 @@
 ---
 import "../../styles/fonts.css";
 import "../../styles/globals.css";
+import MyFace from "../../static/imgs/my_face.png";
 
 interface Props {
   title: string;
@@ -25,7 +26,7 @@ const { title, description } = Astro.props;
         "I'm Zaid. This is my blog, where I write about random stuff."}
     />
     <meta property="og:title" content={`${title} | Nico's Blog`} />
-    <meta property="og:image" content="/favicon.ico" />
+    <meta property="og:image" content={MyFace.src} />
     <meta property="og:type" content="website" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="/favicon.ico" />
