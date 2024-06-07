@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 export async function rateLimit(identifier: string) {
     const ratelimit = new Ratelimit({
         redis: Redis.fromEnv(),
-        limiter: Ratelimit.slidingWindow(1, "50 s"),
+        limiter: Ratelimit.slidingWindow(1, "15 s"),
         analytics: true,
         prefix: "@upstash/ratelimit",
     });
