@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         return new Response(JSON.stringify(contactData.error), { status: 400 })
     }
 
-    if (!import.meta.env.DEV) {
+    if (process.env.NODE_ENV === "production") {
         const identifier = clientAddress ?? body.email;
         const { success, remaining } = await rateLimit(identifier);
         console.log(remaining);
