@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 
 export default function ContactForm() {
     const form = useForm<{
@@ -39,8 +39,17 @@ export default function ContactForm() {
                 form.reset();
                 setSuccess(true);
                 setError(null);
+
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 5000);
             } catch (e) {
-                setError("Failed to submit form. Please try again later, or email me.");
+                setError((e as Error).message);
+                setSuccess(false);
+
+                setTimeout(() => {
+                    setError(null);
+                }, 5000);
             }
         })}>
         <h3 className="text-3xl">Contact Me</h3>
