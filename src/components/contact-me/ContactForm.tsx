@@ -29,6 +29,10 @@ export default function ContactForm() {
                 });
 
                 if (!response.ok) {
+                    if (response.status === 429) {
+                        throw new Error("You are sending too many requests. Please try again later.");
+                    }
+
                     throw new Error("Failed to submit form. Please try again later, or email me.");
                 }
 
