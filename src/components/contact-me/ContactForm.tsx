@@ -20,7 +20,7 @@ export default function ContactForm() {
         className="md:w-2/5 flex flex-col gap-2 p-8 h-fit rounded-xl border-4 border-slate-800/75"
         onSubmit={form.handleSubmit(async (data) => {
             try {
-                const response = await fetch("/contactme", {
+                const response = await fetch("/api/contactme", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
