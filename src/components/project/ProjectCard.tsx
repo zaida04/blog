@@ -6,6 +6,7 @@ export interface ProjectProps {
     statistics?: Record<string, string> | string;
     description: string;
     tags: string[];
+    shutdown?: boolean;
     links: {
         github?: string;
         website?: string;
@@ -16,10 +17,19 @@ export default function ProjectCard(props: ProjectProps) {
     return (
         <div className="flex flex-col h-fit w-fit gap-3 px-6 py-4 border-2 rounded-2xl border-slate-800/50">
             <div>
-                <p className="text-2xl font-bold text-white">{props.title}</p>
+                <div className="flex gap-2 items-center">
+                    <p className={`text-2xl font-bold ${props.shutdown ? "text-gray-400 line-through" : "text-white"}`}>
+                        {props.title}
+                    </p>
+                    {props.shutdown &&
+                        <div className="px-2 bg-slate-700 h-fit rounded-xl">
+                            <p className="text-xs">shutdown</p>
+                        </div>
+                    }
+                </div>
                 {props.statistics &&
                     (typeof props.statistics === "object" ? (
-                        <div className="flex flex-row gap-2 text-amber-500">
+                        <div className={`flex flex-row gap-2 text-amber-500`}>
                             {Object.entries(props.statistics).map(([stat, value], index) => (
                                 <Statistic key={stat} prefixDot={index !== 0} value={value} statistic={stat} />
                             ))}
