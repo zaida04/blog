@@ -180,8 +180,8 @@ const allPosts = await getCollection("posts");
       </p>
     </div>
 
-    <div class="flex flex-col gap-16 md:gap-2 md:flex-row">
-      <div class="flex flex-col gap-10 mt-8 md:w-3/5">
+    <div class="flex flex-col gap-16 mt-6 md:gap-2 md:flex-row">
+      <div class="flex flex-col gap-10 md:w-3/5">
         {
           allPosts
             .filter((project) => project.data.visible !== false)
