@@ -169,28 +169,28 @@ const allPosts = await getCollection("posts");
         }
       </div>
     </div>
+  </div>
 
-    <div id="blog">
-      <div class="mb-2">
-        <h2>Blog</h2>
-        <p>
-          This is my little corner of the internet. Opinion pieces, tutorials,
-          learnings, and more.
-        </p>
+  <div id="blog">
+    <div class="mb-2">
+      <h2>Blog</h2>
+      <p>
+        This is my little corner of the internet. Opinion pieces, tutorials,
+        learnings, and more.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-16 md:gap-2 md:flex-row">
+      <div class="flex flex-col gap-10 mt-8 md:w-3/5">
+        {
+          allPosts
+            .filter((project) => project.data.visible !== false)
+            .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+            .map((post) => <BlogCard {...post} />)
+        }
       </div>
 
-      <div class="flex flex-col gap-16 md:gap-2 md:flex-row">
-        <div class="flex flex-col gap-10 mt-8 md:w-3/5">
-          {
-            allPosts
-              .filter((project) => project.data.visible !== false)
-              .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
-              .map((post) => <BlogCard {...post} />)
-          }
-        </div>
-
-        <ContactForm client:load />
-      </div>
+      <ContactForm client:load />
     </div>
   </div>
 </PageLayout>
