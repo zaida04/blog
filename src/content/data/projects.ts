@@ -121,3 +121,25 @@ export const projects_data = {
 	backends: ProjectProps[];
 	libraries: ProjectProps[];
 };
+
+
+export const project_sections: Record<
+	string,
+	{ slug: keyof typeof projects_data; description: string }
+> = {
+	"Websites & Fullstack": {
+		slug: "sites",
+		description:
+			"These are full-stack or frontend-only projects that I've created.",
+	},
+	"Backend & Bots": {
+		slug: "backends",
+		description:
+			"These are backend-only projects that I've created. Some are chat-bots, APIs, proxies, or other.",
+	},
+	Libraries: {
+		slug: "libraries",
+		description:
+			"These are open-source libraries that I've created. These are used by myself and others to make it easier to build their projects.",
+	},
+};

@@ -16,27 +16,7 @@ import Link from "../components/Link";
 import { colors } from "../utils/links";
 import Typing from "../components/Typing";
 import ContactForm from "../components/contact-me/ContactForm";
-
-const project_sections: Record<
-  string,
-  { slug: keyof typeof projects_data; description: string }
-> = {
-  "Websites & Fullstack": {
-    slug: "sites",
-    description:
-      "These are full-stack or frontend-only projects that I've created.",
-  },
-  "Backend & Bots": {
-    slug: "backends",
-    description:
-      "These are backend-only projects that I've created. Some are chat-bots, APIs, proxies, or other.",
-  },
-  Libraries: {
-    slug: "libraries",
-    description:
-      "These are open-source libraries that I've created. These are used by myself and others to make it easier to build their projects.",
-  },
-};
+import { ProjectTabbar } from "../components/project/ProjectTabs";
 
 const allPosts = await getCollection("posts");
 ---
@@ -164,38 +144,15 @@ const allPosts = await getCollection("posts");
     </div>
   </div>
 
-  <div id="projects" class="flex flex-col gap-6">
-    <div>
+  <div id="projects">
+    <div class="mb-2">
       <h2>Featured Projects</h2>
       <p>
         These are the projects that I believe display the knowlege I've
         accumulated over the years.
       </p>
     </div>
-    <div class="flex flex-col">
-      {
-        Object.entries(project_sections).map(
-          ([title, json_section], index, arr) => {
-            const isLast = index === arr.length - 1;
-
-            return (
-              <div class="md:border-l-2 border-slate-700 md:pl-8">
-                <h3 class="font-normal">{title}</h3>
-                <p class="text-base w-[90%] pb-4">{json_section.description}</p>
-                <div class="flex flex-row gap-4 overflow-x-auto">
-                  {projects_data[json_section.slug].map((project) => (
-                    <ProjectCard {...project} />
-                  ))}
-                </div>
-                {!isLast && (
-                  <div class="w-3/5 h-[2px] bg-slate-700 mx-auto my-4 md:my-8" />
-                )}
-              </div>
-            );
-          }
-        )
-      }
-    </div>
+    <ProjectTabbar client:load />
   </div>
 
   <div id="competitions">
