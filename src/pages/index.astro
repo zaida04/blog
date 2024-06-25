@@ -156,30 +156,35 @@ const allPosts = await getCollection("posts");
   </div>
 
   <div id="competitions">
-    <h2>Competitions</h2>
-    <div class="flex flex-row overflow-x-auto pb-4 gap-4 mt-4">
-      {
-        competitions_data.map((competition) => (
-          <CompetitionCard {...competition} />
-        ))
-      }
-    </div>
-  </div>
-
-  <div id="blog">
-    <h2>Blog</h2>
-
-    <div class="flex flex-col gap-16 md:gap-2 md:flex-row">
-      <div class="flex flex-col gap-10 mt-8 md:w-3/5">
+    <div class="mb-2">
+      <h2>Competitions</h2>
+      <p>
+        These are the competitions that I've participated in or helped organize.
+      </p>
+      <div class="flex flex-row overflow-x-auto pb-4 gap-4 mt-4">
         {
-          allPosts
-            .filter((project) => project.data.visible !== false)
-            .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
-            .map((post) => <BlogCard {...post} />)
+          competitions_data.map((competition) => (
+            <CompetitionCard {...competition} />
+          ))
         }
       </div>
+    </div>
 
-      <ContactForm client:load />
+    <div id="blog">
+      <h2>Blog</h2>
+
+      <div class="flex flex-col gap-16 md:gap-2 md:flex-row">
+        <div class="flex flex-col gap-10 mt-8 md:w-3/5">
+          {
+            allPosts
+              .filter((project) => project.data.visible !== false)
+              .sort((a, b) => b.data.publishedAt - a.data.publishedAt)
+              .map((post) => <BlogCard {...post} />)
+          }
+        </div>
+
+        <ContactForm client:load />
+      </div>
     </div>
   </div>
 </PageLayout>
