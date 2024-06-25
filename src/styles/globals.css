@@ -20,7 +20,7 @@
   }
 
   a {
-    @apply underline underline-offset-2 hover:text-white transition-colors;
+    @apply underline underline-offset-2 hover:opacity-70 transition-colors;
   }
 
   body {
