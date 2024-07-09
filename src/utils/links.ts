@@ -11,4 +11,5 @@ export const colors = {
 	mirage: { color: "text-[#FFE5B4]", url: "https://www.miragesecurity.ai" },
 	adobe: { color: "text-[#ED2224]", url: "https://discord.gg/acc" },
 	fiveable: { color: "text-[#14ac3d]", url: "https://fiveable.me" },
+	ubuffalo: { color: "text-[#00539f]", url: "https://www.buffalo.edu" },
 };
