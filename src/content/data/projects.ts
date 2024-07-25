@@ -19,7 +19,6 @@ export const projects_data = {
 				servers: "1,800+",
 				members: "100,000+",
 			},
-			shutdown: true,
 			description:
 				"The first moderation bot on guilded.gg. Comes with auto-moderation, user verification, logging, and more.",
 			tags: ["TypeScript", "Next.JS", "React"],
