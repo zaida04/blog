@@ -1,0 +1,189 @@
+---
+title: "Optimizing my Rust build from 238s to 25s"
+publishedAt: 1722451528535
+description: "Less time waiting, more time coding."
+tags: ["rust", "docker"]
+---
+
+## The backstory
+
+At the University at Buffalo, I manage a project called the Trace Tool, a quizzing tool for the CS department that helps evaluate students' understanding of how their code interacts with memory. It was created to replace the tedious paper-based quizzes. This summer, we decided to rewrite the tool and introduce new features, including generating a trace quiz solution directly from code. This was something unheard of before. Previously, we did these traces on paper and took photos of them, but now we can generate them directly from code.
+
+The trace generation component, written in Rust by one of our teammates, caused significant build time issues in Docker. The project took 238 seconds to build, while the rest of the application, written in TypeScript, took only 10 seconds to build and even less to start. The lengthy build time for the Rust component had to change, prompting my journey to optimize the Rust build in Docker. This is how I optimized the Rust build time in Docker from 238.2 seconds to 25.9 seconds using cargo-chef and a few tricks.
+
+## The journey
+
+The trace generation component of the code is a simple Rocket API. It takes in code, runs the debugger for the appropriate language, then spits out a spec-compliant schema for a trace. The workspace had a couple of Rust projects, but the main one was the adapter_runner, which was the Rocket API. The adapter_runner had a couple of dependencies, including the debug_adapter, which was a library that interfaced with the debugger.
+
+The file structure looked like this:
+
+```markdown
+├───autotracing
+│ ├─── ...
+├───backend
+│ ├───adapter_runner
+│ │ └───src
+│ └───debug_adapter
+│ └───src
+```
+
+For the sake of making these Dockerfiles not too long, I'll simplify the Dockerfile to only include the adapter_runner. The debug_adapter is a library crate that the adapter_runner uses, so it's not necessary to include it in the Dockerfile.
+
+### Baseline
+
+```dockerfile
+### Step 1 - Build
+FROM rust:alpine as builder
+WORKDIR /app
+
+RUN apk add --no-cache musl-dev gcc
+COPY backend/ .
+RUN cd adapter_runner && cargo build --release
+
+### Step 2 - Run
+FROM alpine
+
+COPY autotracing/ ./autotracing
+COPY --from=builder /app/adapter_runner/target/release/adapter_runner /app/adapter_runner
+
+CMD ["./app/adapter_runner"]
+```
+
+```
+Note: The timing shown omits the time it takes to run menial commands like cd, which is negligible.
+It is a sum of the significant commands.
+
+total: 238.2 seconds (initial and subsequent builds)
+breakdown:
+- cargo build --release (adapter_runner): 238.2 seconds
+```
+
+This is a simple multi-step Dockerfile that builds the Rust code in a Rust image and then copies the binary to an Alpine image. The build time for this Dockerfile was 238 seconds, which was unacceptable. The reason for this is that when you run `cargo build --release`, it builds all the dependencies (unless built before). However, since this step is tightly coupled with the source code building step, Docker can't cache our build dependencies. As a result, every time the source code changes, Docker has to rebuild all the dependencies, which is a huge waste of time.
+
+After some investigation, I discovered that I could separate the install and dependency build steps from the source code build step using [cargo-chef](https://github.com/LukeMathWalker/cargo-chef). cargo-chef is a tool that analyzes your rust dependencies and spits out a recipe. This recipe is then used to install and build just your dependencies, completely decoupled from the source code building step. This way, Docker could cache the dependencies and only rebuild the source code when it changes. I ended up with the following Dockerfile.
+
+### Using cargo-chef & alpine
+
+```dockerfile
+### Step 0 - Install cargo-chef
+FROM rust:alpine as chef
+WORKDIR /app
+RUN apk add --no-cache musl-dev gcc && cargo install cargo-chef
+
+### Step 1 - Plan
+FROM chef AS planner
+
+# We copy the cargo.toml because then we can generate the recipe without copying all the code. That means code changes won't rerun any of these steps.
+COPY backend/adapter_runner/Cargo.toml backend/adapter_runner/Cargo.lock ./backend/adapter_runner/
+# We make a dummy file so that we can generate the recipe without copying all the code.
+RUN mkdir -p backend/adapter_runner/src && echo "fn main() {}" > backend/adapter_runner/src/main.rs
+
+# Generate the recipe.
+RUN cd backend/adapter_runner && cargo chef prepare --recipe-path recipe.json
+
+### Step 2 - Build
+FROM chef AS builder
+
+# Copy the recipe
+COPY --from=planner /app/backend/adapter_runner/recipe.json /app/backend/adapter_runner/recipe.json
+# Install the dependencies (this is the most important step. this is cached and speeds up builds).
+RUN cd backend/adapter_runner && cargo chef cook --release --recipe-path recipe.json
+
+# Copy all the code. This is the layer that all non-first builds will start at.
+COPY . .
+RUN cd backend/adapter_runner && cargo build --release
+
+### Step 3 - Run
+FROM rust:alpine as runtime
+WORKDIR /app
+
+COPY autotracing/ ./autotracing
+COPY --from=builder /app/backend/adapter_runner/target/release/adapter_runner /app/adapter_runner
+
+CMD ["/app/adapter_runner"]
+```
+
+At first glance, this Dockerfile seems complex, but it can be broken down into three steps:
+
+- Plan: This step analyzes the Cargo.toml file and generates a recipe for our dependencies. A recipe is comparable to a package.json in JavaScript, listing everything needed to build your project. This step is cached and only reruns when a dependency changes. By stubbing out the main.rs file, we can generate the recipe without copying all the code, which is important because we don't want to rerun this step every time the source code changes.
+- Build: This step installs and builds the dependencies using the recipe generated in the previous step. It then copies the source code and builds it. On cached runs, this step will start at the COPY . . line, which is where the source code is copied. This is the big optimization that speeds up the build time.
+- Run: This step copies the binary to an Alpine image and runs it.
+
+Now, let's look at the results of this Dockerfile:
+
+```
+total: 318.6 seconds (initial build), 95 seconds (subsequent builds)
+breakdown:
+- cargo install cargo-chef - 82.4s (initial run), 0s (subsequent run)
+- cargo chef cook - 141.2s (initial run), 0s (subsequent run)
+- cargo build --release - 95s (both)
+```
+
+![Baseline vs v1 comparison](/imgs/build_time_comparison.png)
+
+Wowza! The initial build time increased to 318.6 seconds. That's not good. However, the subsequent build time decreased to 95 seconds. This is because the initial build now includes the time to install cargo-chef and generate the recipe. The subsequent build time is significantly faster because the dependencies are cached, and only the source code is rebuilt. This is a huge improvement from the original 238 seconds.
+
+I decided to investigate why the initial build time was so high. I discovered two reasons: the time it took to install cargo-chef and the time it took to build the code. The first issue was easily solvable, as there was a cached image with cargo-chef installed, so I could just use that. I'll address the second point at the end of the article, where something surprising was discovered. For now, let's focus on further optimizing the Dockerfile.
+
+### Using cargo-chef & slim-bookworm (final)
+
+```dockerfile
+FROM lukemathwalker/cargo-chef:latest-rust-1 as chef
+WORKDIR /app
+
+### Step 1 - Plan
+FROM chef AS planner
+
+# We copy the cargo.toml because then we can generate the recipe without copying all the code. That means code changes won't rerun any of these steps.
+COPY backend/adapter_runner/Cargo.toml backend/adapter_runner/Cargo.lock ./backend/adapter_runner/
+# We make a dummy file so that we can generate the recipe without copying all the code.
+RUN mkdir -p backend/adapter_runner/src && echo "fn main() {}" > backend/adapter_runner/src/main.rs
+
+# Generate the recipe.
+RUN cd backend/adapter_runner && cargo chef prepare --recipe-path recipe.json
+
+### Step 2 - Build
+FROM chef AS builder
+
+# Copy the recipe
+COPY --from=planner /app/backend/adapter_runner/recipe.json /app/backend/adapter_runner/recipe.json
+# Install the dependencies (this is the most important step. this is cached and speeds up builds).
+RUN cd backend/adapter_runner && cargo chef cook --release --recipe-path recipe.json
+
+# Copy all the code. This is the layer that all non-first builds will start at.
+COPY . .
+RUN cd backend/adapter_runner && cargo build --release
+
+### Step 3 - Run
+FROM rust:slim-bookworm as runtime
+WORKDIR /app
+
+COPY --from=builder /app/backend/adapter_runner/target/release/adapter_runner /app/adapter_runner
+COPY autotracing autotracing
+
+CMD ["/app/adapter_runner"]
+```
+
+```
+total: 82.6 seconds (initial build), 25.9 seconds (subsequent builds)
+breakdown:
+- cargo install cargo-chef - 0s (already installed in image)
+- cargo chef cook - 56.1s (initial run), 0s (cache runs)
+- cargo build --release - 25.9s (both)
+```
+
+![Baseline vs v1 vs v2 comparison](/imgs/build_time_comparison_v2.png)
+
+This is the final Dockerfile. The only changes I made were using a cached image with `cargo-chef` installed and switching from Alpine to slim-bookworm (Debian). But something unexpected happened: the time it took to run `cargo build --release` also decreased significantly. Why was that? It turns out that when using Alpine, you have to use musl over glibc for building. While musl is intended to be a lightweight alternative to glibc, it has performance issues with multi-core builds. [This article](https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/) and [this reddit post](https://www.reddit.com/r/rust/comments/gdycv8/why_does_musl_make_my_code_so_slow/) provide a deep dive into why this is the case (hint: it's the allocator). By switching over to slim-bookworm, we're back to using glibc, which is faster for multi-core builds.
+
+So, now we've achieved our final time. Looking at the stats, it's a clear improvement. On initial run, it's **65% faster than our baseline and 74% faster than `rust:alpine`**. On subsequent runs, it's **89.1% faster than our baseline and 72% faster than `rust:alpine`**. This is a huge improvement, and I'm happy with the results.
+
+## Conclusion
+
+In conclusion, I was able to optimize the Rust build time in Docker from 238 seconds to 25.9 seconds. Some takeaways from this journey are:
+
+- Use cargo-chef to separate the dependency installation and source code building steps.
+- Use a cached image with the OS-level dependencies wherever possible.
+- Use Debian over Alpine for Rust builds to avoid performance issues with musl.
+
+This was a huge improvement and I'm happy with the results. I hope this article helps you optimize your Rust build time in Docker as well. If you have any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/yumiyuma23)! Thank you for reading and have an amazing day.

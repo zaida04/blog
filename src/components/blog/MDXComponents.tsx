@@ -4,7 +4,7 @@ import Statistic from "./Statistic";
 const slugizeheader = (header: any) => {
     return header.props.value.toString().toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 }
-const headerwithlink = "font-bold font-rubik py-4 text-center md:text-left hover:underline underline-offset-2 hover:cursor-pointer"
+const headerwithlink = "font-bold font-rubik py-4 text-center md:text-left hover:cursor-pointer"
 
 const MDXComponents = {
     h1: (props: { children: React.ReactNode }) => {
@@ -19,16 +19,20 @@ const MDXComponents = {
     h2: (props: { children: React.ReactNode }) => {
         const slug = slugizeheader(props.children as string);
 
-        return <h2 id={slug} className={`text-2xl md:text-3xl ${headerwithlink}`} {...props}>
-            {props.children}
-        </h2>
+        return <a href={`#${slug}`} className="no-underline">
+            <h2 id={slug} className={`text-2xl md:text-3xl ${headerwithlink}`} {...props}>
+                {props.children}
+            </h2>
+        </a>
     },
     h3: (props: { children: React.ReactNode }) => {
         const slug = slugizeheader(props.children as string);
 
-        return <h3 id={slug} className={`text-xl md:text-2xl ${headerwithlink}`} {...props}>
-            {props.children}
-        </h3>
+        return <a href={`#${slug}`} className="no-underline">
+            <h3 id={slug} className={`text-xl md:text-2xl ${headerwithlink}`} {...props}>
+                {props.children}
+            </h3>
+        </a>
     },
     a: (props: { children: React.ReactNode; href: string }) => {
         return (
@@ -41,7 +45,7 @@ const MDXComponents = {
         return <p className="pb-4 font-normal leading-snug indent-4 text-left w-full">{props.children}</p>;
     },
     code: (props: { children: React.ReactNode }) => {
-        return <code className="text-base text-red-600">{props.children}</code>;
+        return <code className="text-base text-red-300">{props.children}</code>;
     },
     pre: (props: { children: React.ReactNode }) => {
         return (
