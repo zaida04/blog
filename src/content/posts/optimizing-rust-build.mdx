@@ -9,25 +9,20 @@ tags: ["rust", "docker"]
 
 At the University at Buffalo, I manage a project called the Trace Tool, a quizzing tool for the CS department that helps evaluate students' understanding of how their code interacts with memory. It was created to replace the tedious paper-based quizzes. This summer, we decided to rewrite the tool and introduce new features, including generating a trace quiz solution directly from code. This was something unheard of before. Previously, we did these traces on paper and took photos of them, but now we can generate them directly from code.
 
-The trace generation component, written in Rust by one of our teammates, caused significant build time issues in Docker. The project took 238 seconds to build, while the rest of the application, written in TypeScript, took only 10 seconds to build and even less to start. The lengthy build time for the Rust component had to change, prompting my journey to optimize the Rust build in Docker. This is how I optimized the Rust build time in Docker from 238.2 seconds to 25.9 seconds using cargo-chef and a few tricks.
+The trace generation component, written in Rust by one of our teammates, caused significant build time issues in Docker. The project took 238 seconds to build, while the rest of the application, written in TypeScript, took only 10 seconds to build and even less to start. The lengthy build time for the Rust component had to change, prompting my journey to optimize the Rust build in Docker. This is how I optimized the build from 238.2 seconds to 25.9 seconds using cargo-chef and a few tricks.
 
 ## The journey
 
-The trace generation component of the code is a simple Rocket API. It takes in code, runs the debugger for the appropriate language, then spits out a spec-compliant schema for a trace. The workspace had a couple of Rust projects, but the main one was the adapter_runner, which was the Rocket API. The adapter_runner had a couple of dependencies, including the debug_adapter, which was a library that interfaced with the debugger.
-
+The trace generation component of the code is a simple Rocket API. It takes in code, runs the debugger for the appropriate language, then spits out a spec-compliant schema for a trace. The workspace had a couple of Rust projects, but the main one was the adapter_runner, which was the Rocket API. For the sake of making these Dockerfiles not too long, I'll simplify the Dockerfile to only include the adapter_runner.
 The file structure looked like this:
 
 ```markdown
 ├───autotracing
-│ ├─── ...
+│ ├─── ... some class files
 ├───backend
 │ ├───adapter_runner
 │ │ └───src
-│ └───debug_adapter
-│ └───src
 ```
-
-For the sake of making these Dockerfiles not too long, I'll simplify the Dockerfile to only include the adapter_runner. The debug_adapter is a library crate that the adapter_runner uses, so it's not necessary to include it in the Dockerfile.
 
 ### Baseline
 
@@ -174,7 +169,7 @@ breakdown:
 
 ![Baseline vs v1 vs v2 comparison](/imgs/build_time_comparison_v2.png)
 
-This is the final Dockerfile. The only changes I made were using a cached image with `cargo-chef` installed and switching from Alpine to slim-bookworm (Debian). But something unexpected happened: the time it took to run `cargo build --release` also decreased significantly. Why was that? It turns out that when using Alpine, you have to use musl over glibc for building. While musl is intended to be a lightweight alternative to glibc, it has performance issues with multi-core builds. [This article](https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/) and [this reddit post](https://www.reddit.com/r/rust/comments/gdycv8/why_does_musl_make_my_code_so_slow/) provide a deep dive into why this is the case (hint: it's the allocator). By switching over to slim-bookworm, we're back to using glibc, which is faster for multi-core builds.
+This is the final Dockerfile. The only changes I made were using a cached image with `cargo-chef` installed and switching from Alpine to slim-bookworm (Debian). But something unexpected happened: the time it took to run `cargo build --release` also decreased significantly. Why was that? It turns out that when using Alpine, you have to use musl over glibc. While musl is intended to be a lightweight alternative to glibc, it has performance issues with multi-core builds. [This article](https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/) and [this reddit post](https://www.reddit.com/r/rust/comments/gdycv8/why_does_musl_make_my_code_so_slow/) provide a deep dive into why this is the case (hint: it's the allocator). By switching over to slim-bookworm, we're back to using glibc, which is faster for multi-core builds.
 
 So, now we've achieved our final time. Looking at the stats, it's a clear improvement. On initial run, it's **65% faster than our baseline and 74% faster than `rust:alpine`**. On subsequent runs, it's **89.1% faster than our baseline and 72% faster than `rust:alpine`**. This is a huge improvement, and I'm happy with the results.
 
