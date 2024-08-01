@@ -3,6 +3,18 @@ import type { ProjectProps } from "../../components/project/ProjectCard";
 export const projects_data = {
 	sites: [
 		{
+			title: "UB Trace Tool",
+			statistics: {
+				students: "2,000+",
+				courses: "4+ courses"
+			},
+			description: "A tool for helping students understand what their code is doing in memory. Built for the UB CS department for use in labs and curriculum",
+			tags: ["TypeScript", "Next.JS", "React", "Tailwind", "Mantine"],
+			links: {
+				website: "https://tracing.cse.buffalo.edu"
+			}
+		},
+		{
 			title: "nico.engineer",
 			statistics: "This site!",
 			description:
