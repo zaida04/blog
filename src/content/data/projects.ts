@@ -6,9 +6,10 @@ export const projects_data = {
 			title: "UB Trace Tool",
 			statistics: {
 				students: "2,000+",
-				courses: "4+ courses"
+				submissions: "50,000+",
+				courses: "4"
 			},
-			description: "A tool for helping students understand what their code is doing in memory. Built for the UB CS department for use in labs and curriculum",
+			description: "A tool for helping students understand what their code is doing in memory. Built for the UB CS department for use in labs and by professors.",
 			tags: ["TypeScript", "Next.JS", "React", "Tailwind", "Mantine"],
 			links: {
 				website: "https://tracing.cse.buffalo.edu"
