@@ -14,9 +14,10 @@ import CompetitionCard from "../components/competition/CompetitionCard";
 import { getCollection } from "astro:content";
 import Link from "../components/Link";
 import { colors } from "../utils/links";
-import Typing from "../components/Typing";
+// import Typing from "../components/Typing";
 import ContactForm from "../components/contact-me/ContactForm";
 import { ProjectTabbar } from "../components/project/ProjectTabs";
+import { TypeAnimation } from "react-type-animation";
 
 const allPosts = await getCollection("posts");
 ---
@@ -24,7 +25,13 @@ const allPosts = await getCollection("posts");
 <PageLayout title="Zaid's Site">
   <div id="home" class="flex flex-col md:flex-row">
     <div class="flex flex-col gap-8 pr-8">
-      <Typing client:load text="Hello, I'm Zaid." />
+      <!-- <Typing client:load text="Hello, I'm Zaid." /> -->
+      <TypeAnimation
+        client:load
+        className="text-4xl md:text-6xl text-white font-bold h-[4rem]"
+        sequence={["Hello, I'm Zaid."]}
+        speed={35}
+      />
 
       <div class="flex flex-col font-normal gap-4">
         <p class="leading-loose">
