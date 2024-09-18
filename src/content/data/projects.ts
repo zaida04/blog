@@ -66,7 +66,7 @@ export const projects_data = {
 			tags: ["TypeScript", "SvelteKit", "Svelte"],
 			links: {
 				github: "https://github.com/zaida04/loggregator",
-				website: "https://loggregator.co",
+				website: "https://loggregator.nico.engineer",
 			},
 		},
 	],
