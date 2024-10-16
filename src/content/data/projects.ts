@@ -28,8 +28,8 @@ export const projects_data = {
 		{
 			title: "Yoki",
 			statistics: {
-				servers: "1,800+",
-				members: "100,000+",
+				servers: "5,000+",
+				members: "300,000+",
 			},
 			description:
 				"The first moderation bot on guilded.gg. Comes with auto-moderation, user verification, logging, and more.",
