@@ -34,7 +34,8 @@ export const projects_data = {
 			description: "The landing page and sign up for UB Hackings 2024 Fall Hackathon",
 			tags: ["JavaScript", "TypeScript", "Svelte", "SvelteKit", "Tailwind"],
 			links: {
-				website: "https://ubhacking.com"
+				website: "https://ubhacking.com",
+				github: "https://github.com/zaida04/ubhacking-fa24"
 			}
 		},
 		{
