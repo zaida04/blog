@@ -31,7 +31,7 @@ export const projects_data = {
 		{
 			title: "UB Hacking 2024",
 			statistics: {
-				hackers: "100+"
+				hackers: "600+"
 			},
 			description: "The landing page and registration platform for UB Hacking's 2024 Fall Hackathon – a hacker's winter wonderland.",
 			tags: ["JavaScript", "TypeScript", "Svelte", "SvelteKit", "Tailwind"],
