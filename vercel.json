@@ -3,6 +3,10 @@
         {
             "source": "/res1",
             "destination": "https://drive.google.com/file/d/1T5eL8LzpeJmA21ZEmT8TTOZHQfi4b56K/view?usp=drivesdk"
+        },
+        {
+            "source": "/res2",
+            "destination": "https://drive.google.com/file/d/1uuYnOxvWluHK7DIZLNB5B_EvGw3akcJ8/view?usp=sharing"
         }
     ]
 }
