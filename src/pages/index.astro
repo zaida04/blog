@@ -22,7 +22,7 @@ const allPosts = await getCollection("posts");
 
 <PageLayout title="Zaid's Site">
   <div id="home" class="flex flex-col md:flex-row justify-between">
-    <div class="flex flex-col gap-6 md:max-w-[65%] pr-4 order-2 md:order-1">
+    <div class="flex flex-col gap-6 md:max-w-[65%] pr-4">
       <!-- <Typing client:load text="Hello, I'm Zaid." /> -->
       <TypeAnimation
         client:load
@@ -143,7 +143,7 @@ const allPosts = await getCollection("posts");
     </div>
 
     <div
-      class="flex flex-col gap-1 items-center md:max-w-[35%] order-1 md:order-2 mb-8 md:mb-0"
+      class="flex flex-col gap-1 md:items-center md:max-w-[35%] order-1 md:order-2 mb-8 md:mb-0"
     >
       <div class="sticky top-4">
         <div
@@ -157,7 +157,7 @@ const allPosts = await getCollection("posts");
           />
         </div>
         <div
-          class="bg-slate-800/50 border-slate-800/50 border-2 h-fit w-fit p-2 rounded-xl mt-1 mx-auto"
+          class="bg-slate-800/50 border-slate-800/50 border-2 h-fit w-fit p-2 rounded-xl mt-1"
         >
           <p class="flex gap-1 text-xs">
             That's me! <ArrowUp size={16} />
