@@ -16,7 +16,7 @@
   }
 
   p {
-    @apply text-lg font-normal;
+    @apply text-base font-normal;
   }
 
   a {

@@ -1,5 +1,12 @@
 export const competitions_data = [
 	{
+		name: "UBHacking",
+		placement: "👷‍♂️",
+		organizer: true,
+		track: "Organizer",
+		date: "11/9/24",
+	},
+	{
 		name: "Wix Create-A-SaaS",
 		placement: "MVP",
 		track: "SaaS Track",

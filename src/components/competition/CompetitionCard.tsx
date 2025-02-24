@@ -3,6 +3,7 @@ import Reef from "../../static/imgs/reef.png";
 export interface CompetitionProps {
     name: string;
     placement: number | string;
+    organizer?: boolean;
     track?: string;
     date: string;
 }
@@ -17,11 +18,12 @@ export default function CompetitionCard(props: CompetitionProps) {
                 width={200}
                 height={200}
             />
-            <p
-                className={`absolute ${typeof props.placement === "string" ? "text-2xl w-[1rem] top-[35%] left-[35%]" : "text-6xl top-[25%] left-[40%] "} font-bold`}
-            >
-                {props.placement}
-            </p>
+            {props.organizer ?
+                <p className="absolute text-4xl top-[30%] left-[38.5%] font-bold">👷‍♂️</p>
+                : <p className={`absolute ${typeof props.placement === "string" ? "text-2xl w-[1rem] top-[35%] left-[35%]" : "text-6xl top-[25%] left-[40%] "} font-bold`}>
+                    {props.placement}
+                </p>
+            }
         </div>
 
         <div className="flex flex-col items-center">
