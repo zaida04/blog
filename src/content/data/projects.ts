@@ -29,6 +29,16 @@ export const projects_data = {
 			}
 		},
 		{
+			title: "Evalx",
+			statistics: "In Progress",
+			description: "Run arbitrary code from any supported language with just a POST request. Focus on building features your users need, leave the code running to us.",
+			tags: ["JavaScript", "TypeScript", "Node.JS", "Next.JS", "React"],
+			links: {
+				github: "https://github.com/zaida04/evalx.sh",
+				website: "https://evalx.nico.engineer",
+			},
+		},
+		{
 			title: "UB Hacking 2024",
 			statistics: {
 				hackers: "600+"
@@ -39,16 +49,6 @@ export const projects_data = {
 				website: "https://ubhacking.com",
 				github: "https://github.com/zaida04/ubhacking-fa24"
 			}
-		},
-		{
-			title: "Evalx",
-			statistics: "In Progress",
-			description: "Run arbitrary code from any supported language with just a POST request. Focus on building features your users need, leave the code running to us.",
-			tags: ["JavaScript", "TypeScript", "Node.JS", "Next.JS", "React"],
-			links: {
-				github: "https://github.com/zaida04/evalx.sh",
-				website: "https://evalx.nico.engineer",
-			},
 		},
 		{
 			title: "Loggregator",
