@@ -19,7 +19,7 @@ export default function CompetitionCard(props: CompetitionProps) {
                 height={200}
             />
             {props.organizer ?
-                <p className="absolute text-4xl top-[30%] left-[38.5%] font-bold">👷‍♂️</p>
+                <p className="absolute text-5xl top-[30%] left-[34%] font-bold [filter:grayscale(100%)]">👷‍♂️</p>
                 : <p className={`absolute ${typeof props.placement === "string" ? "text-2xl w-[1rem] top-[35%] left-[35%]" : "text-6xl top-[25%] left-[40%] "} font-bold`}>
                     {props.placement}
                 </p>
