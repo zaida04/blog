@@ -15,5 +15,8 @@ export default defineConfig({
     react(),
     mdx(),
     vercel()
-  ]
+  ],
+  adapter: vercel({
+    webAnalytics: true,
+  })
 });
