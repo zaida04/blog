@@ -37,6 +37,6 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <slot />
-    <Analytics />
+    <Analytics client:load />
   </body>
 </html>
