@@ -2,6 +2,7 @@
 import "../../styles/fonts.css";
 import "../../styles/globals.css";
 import MyFace from "../../static/imgs/my_face.png";
+import { Analytics } from "@vercel/analytics/react";
 
 interface Props {
   title: string;
@@ -36,5 +37,6 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <slot />
+    <Analytics />
   </body>
 </html>
