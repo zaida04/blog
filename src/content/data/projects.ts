@@ -12,7 +12,7 @@ export const projects_data = {
 				"The first moderation bot on guilded.gg. Comes with auto-moderation, user verification, logging, and more.",
 			tags: ["JavaScript", "TypeScript", "Next.JS", "React"],
 			links: {
-				github: "https://github.com/yoki-labs",
+				github: "https://github.com/yoki-labs/yoki-monorepo",
 				website: "https://yoki.gg",
 			},
 		},
